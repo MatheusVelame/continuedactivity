@@ -12,6 +12,7 @@ import java.time.LocalDate;
  * e m�todos set/get p�blicos para os atributos. O atributo identificador
  * � read-only fora da classe.
  */
+
 public class Ativo {
 	
 	private int identificador;
@@ -26,11 +27,6 @@ public class Ativo {
 	
 	public int getIdentificador() {
 		return identificador;
-	}
-	
-	@SuppressWarnings("unused")
-	private void setIdentificador(int identificador) {
-		this.identificador = identificador;
 	}
 	
 	public String getNome() {

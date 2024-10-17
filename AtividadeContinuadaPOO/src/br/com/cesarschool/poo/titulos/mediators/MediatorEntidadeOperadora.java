@@ -1,5 +1,9 @@
 package br.com.cesarschool.poo.titulos.mediators;
+
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
 /*
+ *
  * Deve ser um singleton.
  * 
  * Deve ter um atributo repositorioEntidadeOperadora, do tipo RepositorioEntidadeOperadora, que deve 
@@ -19,6 +23,8 @@ package br.com.cesarschool.poo.titulos.mediators;
  * (1) - Identificador deve estar entre 100 e 1000000.
  * (2) - Nome deve ser preenchido.
  * (3) - Nome deve ter entre 10 e 100 caracteres.
+ * 
+ * ------
  *
  * public String incluir(EntidadeOperadora entidade): deve chamar o método validar. Se ele 
  * retornar null, deve incluir entidade no repositório. Retornos possíveis:
@@ -48,6 +54,30 @@ package br.com.cesarschool.poo.titulos.mediators;
  * Se este for válido, deve chamar o buscar do repositório, retornando o 
  * que ele retornar. Se o identificador for inválido, retornar null. 
  */
-public class MediatorEntdadeOperadora {
+public class MediatorEntidadeOperadora {
+	
+	private static MediatorEntidadeOperadora unicaInstancia = new MediatorEntidadeOperadora(); // singleton
 
+	private RepositorioEntidadeOperadora repositorioEntidadeOperadora = new RepositorioEntidadeOperadora();
+	
+	private MediatorEntidadeOperadora() { // construto vazio para o singleton
+		
+	}
+	
+	private String validar(EntidadeOperadora entidade) {
+		if (entidade.getIdentificador() < 100 || entidade.getIdentificador() > 1000000) {
+			return ("Identificador deve estar entre 100 e 1000000.");
+		}
+		if (entidade.getNome() == null) {
+			return ("Nome deve ser preenchido.");
+		}
+		if (entidade.getNome().length() < 5 || entidade.getNome().length() > 60) {
+			return ("Nome deve ter entre 5 e 60 caracteres.");
+		}
+		
+		return null;
+	}
+	
+	
+	
 }

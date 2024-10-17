@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
  * 
  *  
  */ 
+
 public class Transacao {
 	
 	private EntidadeOperadora entidadeCredito;
@@ -43,45 +44,20 @@ public class Transacao {
 		return entidadeDebito;
 	}
 	
-	@SuppressWarnings("unused")
-	private void setEntidadeDebito(EntidadeOperadora entidadeDebito) {
-		this.entidadeDebito = entidadeDebito;
-	}
-	
 	public Acao getAcao() {
 		return acao;
-	}
-	
-	@SuppressWarnings("unused")
-	private void setAcao(Acao acao) {
-		this.acao = acao;
 	}
 	
 	public TituloDivida getTituloDivida() {
 		return tituloDivida;
 	}
 	
-	@SuppressWarnings("unused")
-	private void setTituloDivida(TituloDivida tituloDivida) {
-		this.tituloDivida = tituloDivida;
-	}
-	
 	public double getValorOperacao() {
 		return valorOperacao;
-	}
-	
-	@SuppressWarnings("unused")
-	private void setValorOperacao(double valorOperacao) {
-		this.valorOperacao = valorOperacao;
 	}
 	
 	public LocalDateTime getDataHoraOperacao() {
 		return dataHoraOperacao;
 	}
 	
-	@SuppressWarnings("unused")
-	private void setDataHoraOperacao(LocalDateTime dataHoraOperacao) {
-		this.dataHoraOperacao = dataHoraOperacao;
-	}
-
 }

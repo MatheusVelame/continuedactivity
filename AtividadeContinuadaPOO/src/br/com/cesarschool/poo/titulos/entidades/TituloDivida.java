@@ -13,6 +13,7 @@ import java.time.LocalDate;
  * Deve ter um m�todo p�blico double calcularPrecoTransacao(double montante): o pre�o 
  * da transa��o � montante vezes (1 - taxaJuros/100.0).
  */
+
 public class TituloDivida extends Ativo {
 	
 	private double taxaJuros;
