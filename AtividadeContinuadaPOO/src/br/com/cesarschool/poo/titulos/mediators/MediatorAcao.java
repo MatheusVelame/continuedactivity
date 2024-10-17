@@ -59,25 +59,23 @@ public class MediatorAcao {
          super(identificador,nome,dataDeValidade,valorUnitario);
          this.repositorioAcao=repositorioAcao;
      }
-     private String validar(Acao acao, int identificador,String nome,LocalDate dataDeValidade,double valorUnitario){
-        if(identificador < 0 || identificador >100000){
+    private String validar(Acao acao, int identificador, String nome, LocalDate dataDeValidade, double valorUnitario) {
+        if (identificador < 0 || identificador > 100000) {
             return "Identificador deve estar entre 1 e 99999.";
+        } else if (nome == null) {
+            return "Nome deve ser preenchido.";
+        } else if (nome.length() < 10 || nome.length() > 100) {
+            return "Nome deve ter entre 10 e 100 caracteres.";
+        } else if (dataDeValidade == null || dataDeValidade.isBefore(dataAtual.plusDays(30))) {
+            return "Data de validade deve ter pelo menos 30 dias à frente da data atual.";
+        } else if (valorUnitario <= 0) {
+            return "Valor unitário deve ser maior que zero.";
         }
-        else if (nome == null) {
-            return "Nome deve ser preenchido.\n";
-        }
-        else if (nome.length() < 10 || nome.length() > 100) {
-            return"Nome deve ter entre 10 e 100 caracteres.\n";
-        }
-        else if (dataDeValidade == null || dataDeValidade.isBefore(dataAtual.plusDays(30))) {
-            return "Data de validade deve ter pelo menos 30 dias na frente da data atual.\n";
-        }
-        else if (valorUnitario < 0) {
-            return "Valor unitário deve ser maior que zero.\n";
-        }
-     }
+        return null;
+    }
 
-     public String incluir(Acao acao){
 
+    public String incluir(Acao acao){
+            RepositorioAcao.incluir(Acao acao);
      }
 }
