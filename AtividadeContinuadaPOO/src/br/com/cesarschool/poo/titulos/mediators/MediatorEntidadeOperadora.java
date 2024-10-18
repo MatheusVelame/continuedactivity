@@ -78,6 +78,14 @@ public class MediatorEntidadeOperadora {
 		return null;
 	}
 	
+	public String incluir(EntidadeOperadora entidade) {
+		String validando = validar (entidade);
+		
+		if (validando == null) {
+			return null;
+		}
+	}
+	
 	
 	
 }
