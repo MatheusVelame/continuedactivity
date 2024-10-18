@@ -66,12 +66,14 @@ public class RepositorioTransacao {
 	
 	public Transacao[] buscarPorEntidadeCredora(long identificadorEntidadeCredito) {
 	    List<Transacao> transacoesEncontradas = new ArrayList<>();
+	    boolean encontrarIdentificadorFlag = false;
 	    
 	    try (BufferedReader reader = new BufferedReader(new FileReader("Transacao.txt"))){
 	        String linha;
 	        while ((linha = reader.readLine()) != null) {
 	            String[] objetosLinha = linha.split(";");
 	            if (Long.parseLong(objetosLinha[0].trim()) == identificadorEntidadeCredito) {
+	            	encontrarIdentificadorFlag = true;
 	                EntidadeOperadora objetosCredito = new EntidadeOperadora(Long.parseLong(objetosLinha[0].trim()), objetosLinha[1].trim(), Boolean.parseBoolean(objetosLinha[2].trim()));
 	                EntidadeOperadora objetosDebito = new EntidadeOperadora(Long.parseLong(objetosLinha[5].trim()), objetosLinha[6].trim(), Boolean.parseBoolean(objetosLinha[7].trim()));
 	                
@@ -97,6 +99,10 @@ public class RepositorioTransacao {
 	        e.printStackTrace();
 	    }
 	    
-	    return transacoesEncontradas.toArray(new Transacao[0]);
+	    if(encontrarIdentificadorFlag) {
+	    	return transacoesEncontradas.toArray(new Transacao[0]);
+	    } else {
+	    	return null;
+	    }
 	}
 }
