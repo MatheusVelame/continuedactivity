@@ -100,7 +100,7 @@ public class RepositorioEntidadeOperadora {
 		
 	}
 	
-	public boolean excluir(Acao acao) {
+	public boolean excluir(int identificador) {
 	
 		boolean encontrarIdentificadorFlag = false;
 		StringBuilder conteudoArquivo = new StringBuilder();
@@ -108,7 +108,7 @@ public class RepositorioEntidadeOperadora {
 		try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
 			String linha;
 			while((linha = reader.readLine()) != null) {
-				if (linha.startsWith(acao.getIdentificador() + ";")) {
+				if (linha.startsWith(identificador + ";")) {
 					encontrarIdentificadorFlag = true;
 				} else {
 					conteudoArquivo.append(linha).append(System.lineSeparator());
