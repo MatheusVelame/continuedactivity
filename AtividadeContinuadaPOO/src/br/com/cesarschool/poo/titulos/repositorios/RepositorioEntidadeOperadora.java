@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado Acao.txt os dados dos objetos do tipo
@@ -128,6 +129,30 @@ public class RepositorioEntidadeOperadora {
 			return false;
 		}
 		
+	}
+	
+	public Acao buscar(int identificador) {
+		
+		Acao acao = null;
+	    String[] partes = null;
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+	        String linha;
+	        while((linha = reader.readLine()) != null) {
+	            if (linha.startsWith(identificador + ";")) {
+	                partes = linha.split(";");
+	                break;    
+	            }
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    if (partes != null && partes.length == 4) {  
+	        acao = new Acao(identificador, partes[1], LocalDate.parse(partes[2]), (Double.parseDouble(partes[3]))); 
+	    }
+	    
+	    return acao;
 	}
 
 }
