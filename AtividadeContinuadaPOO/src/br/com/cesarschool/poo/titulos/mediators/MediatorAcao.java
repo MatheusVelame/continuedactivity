@@ -1,6 +1,9 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
 import java.time.LocalDate;
+
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 /*
  * Deve ser um singleton.
  * 

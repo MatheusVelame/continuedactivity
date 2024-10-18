@@ -63,7 +63,7 @@ public class RepositorioAcao {
 			}
 
 			String novaLinha = acao.getIdentificador() + ";" + acao.getNome() + ";" +
-					acao.getDataValidade() + ";" + acao.getValorUnitario();
+					acao.getDataDeValidade() + ";" + acao.getValorUnitario();
 			Files.write(Paths.get("Acao.txt"), Collections.singletonList(novaLinha), StandardOpenOption.APPEND);
 			return true;
 
@@ -89,7 +89,7 @@ public class RepositorioAcao {
 
 				if (id == acao.getIdentificador()) {
 					linha = acao.getIdentificador() + ";" + acao.getNome() + ";" +
-							acao.getDataValidade() + ";" + acao.getValorUnitario();
+							acao.getDataDeValidade() + ";" + acao.getValorUnitario();
 					encontrado = true;
 				}
 
@@ -165,7 +165,7 @@ public class RepositorioAcao {
 			return "Nome deve ser preenchido.";
 		} else if (acao.getNome().length() < 10 || acao.getNome().length() > 100) {
 			return "Nome deve ter entre 10 e 100 caracteres.";
-		} else if (acao.getDataValidade() == null || acao.getDataValidade().isBefore(LocalDate.now().plusDays(30))) {
+		} else if (acao.getDataDeValidade() == null || acao.getDataDeValidade().isBefore(LocalDate.now().plusDays(30))) {
 			return "Data de validade deve ter pelo menos 30 dias à frente da data atual.";
 		} else if (acao.getValorUnitario() <= 0) {
 			return "Valor unitário deve ser maior que zero.";
