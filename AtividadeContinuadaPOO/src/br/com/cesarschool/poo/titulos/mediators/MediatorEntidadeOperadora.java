@@ -56,13 +56,20 @@ import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
  */
 public class MediatorEntidadeOperadora {
 	
-	private static MediatorEntidadeOperadora unicaInstancia = new MediatorEntidadeOperadora(); // singleton
+	private static MediatorEntidadeOperadora unicaInstancia; // singleton
 
 	private RepositorioEntidadeOperadora repositorioEntidadeOperadora = new RepositorioEntidadeOperadora();
 	
 	private MediatorEntidadeOperadora() { // construto vazio para o singleton
 		
 	}
+	
+	public MediatorEntidadeOperadora getInstancia() {
+        if (unicaInstancia == null) {
+        	unicaInstancia = new MediatorEntidadeOperadora();
+        }
+        return unicaInstancia;
+    }
 	
 	private String validar(EntidadeOperadora entidade) {
 		if (entidade.getIdentificador() < 100 || entidade.getIdentificador() > 1000000) {
@@ -80,12 +87,52 @@ public class MediatorEntidadeOperadora {
 	
 	public String incluir(EntidadeOperadora entidade) {
 		String validando = validar (entidade);
+		boolean incluindo = repositorioEntidadeOperadora.incluir(entidade);
 		
-		if (validando == null) {
+		if ((validando == null) && (incluindo == true)) {
 			return null;
+		} else if ((validando == null) && (incluindo == false)) {
+			return "Entidade já existente";
+		} else{
+			return validando;
 		}
 	}
 	
+	public String alterar(EntidadeOperadora entidade) {
+		String validando = validar (entidade);
+		boolean alterando = repositorioEntidadeOperadora.alterar(entidade);
+		
+		if ((validando == null) && (alterando == true)) {
+			return null;
+		} else if ((validando == null) && (alterando == false)) {
+			return "Entidade inexistente";
+		} else{
+			return validando;
+		}
+	}
 	
+	public String excluir(int identificador) {
+		
+		if (identificador < 100 || identificador > 1000000) {
+            return "Entidade inexistente";
+        }
+        boolean excluindo = repositorioEntidadeOperadora.excluir(identificador);
+        if(excluindo == true) {
+        	return null;
+        }else {
+        	return "Entidade inexistente";
+        }
+        
+	}
+	
+	public EntidadeOperadora buscar(int identificador) {
+		
+		if (identificador < 100 || identificador > 1000000) {
+			return null;
+		}
+		
+		return repositorioEntidadeOperadora.buscar(identificador);
+		
+	}
 	
 }
