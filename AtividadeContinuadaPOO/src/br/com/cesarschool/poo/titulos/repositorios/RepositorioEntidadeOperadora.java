@@ -1,13 +1,12 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
-import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado Acao.txt os dados dos objetos do tipo
@@ -35,15 +34,15 @@ import java.time.LocalDate;
 
 public class RepositorioEntidadeOperadora {
 	
-	public boolean incluir(Acao acao) {
+	public boolean incluir(EntidadeOperadora entidadeOperadora) {
 		
-		String objetosAcao = (acao.getIdentificador() + ";" + acao.getNome() + ";" + acao.getDataDeValidade() + ";" + acao.getValorUnitario());
+		String objetosOperadora = (entidadeOperadora.getIdentificador() + ";" + entidadeOperadora.getNome() + ";" + entidadeOperadora.getAutorizadoAcao() + ";" + entidadeOperadora.getSaldoAcao() + ";" + entidadeOperadora.getSaldoTituloDivida());
 		boolean encontrarIdentificadorFlag = true;
 	
-		try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+		try (BufferedReader reader = new BufferedReader(new FileReader("EntidadeOperadora.txt"))){
 			String linha ;
 			while((linha = reader.readLine()) != null) {
-				if (linha.startsWith(acao.getIdentificador() + ";")) {  // Usa startsWith para verificar o identificador
+				if (linha.startsWith(entidadeOperadora.getIdentificador() + ";")) {  // Usa startsWith para verificar o identificador
 					encontrarIdentificadorFlag = false;
 					break;
 				}
@@ -54,8 +53,8 @@ public class RepositorioEntidadeOperadora {
 		}
 		
 		if (encontrarIdentificadorFlag) {
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter("Acao.txt", true))) {
-				writer.write(objetosAcao);
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter("EntidadeOperadora.txt", true))) {
+				writer.write(objetosOperadora);
 				writer.newLine();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -67,17 +66,17 @@ public class RepositorioEntidadeOperadora {
 		
 	}
 	
-	public boolean alterar(Acao acao) {
+	public boolean alterar(EntidadeOperadora entidadeOperadora) {
 		
-		String novosObjetosAcao = (acao.getIdentificador() + ";" + acao.getNome() + ";" + acao.getDataDeValidade() + ";" + acao.getValorUnitario());
+		String novosObjetosOperadora = (entidadeOperadora.getIdentificador() + ";" + entidadeOperadora.getNome() + ";" + entidadeOperadora.getAutorizadoAcao() + ";" + entidadeOperadora.getSaldoAcao() + ";" + entidadeOperadora.getSaldoTituloDivida());
 		boolean encontrarIdentificadorFlag = false;
 		StringBuilder conteudoArquivo = new StringBuilder();
 		
-		try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+		try (BufferedReader reader = new BufferedReader(new FileReader("EntidadeOperadora.txt"))){
 			String linha;
 			while((linha = reader.readLine()) != null) {
-				if (linha.startsWith(acao.getIdentificador() + ";")) {  // Usa startsWith para verificar o identificador
-					conteudoArquivo.append(novosObjetosAcao).append(System.lineSeparator());
+				if (linha.startsWith(entidadeOperadora.getIdentificador() + ";")) {  // Usa startsWith para verificar o identificador
+					conteudoArquivo.append(novosObjetosOperadora).append(System.lineSeparator());
 					encontrarIdentificadorFlag = true;
 				} else {
 					 conteudoArquivo.append(linha).append(System.lineSeparator());  // Mantém as outras linhas inalteradas
@@ -88,7 +87,7 @@ public class RepositorioEntidadeOperadora {
 		}
 		
 		if (encontrarIdentificadorFlag) {
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter("Acao.txt"))) {
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter("EntidadeOperadora.txt"))) {
 				writer.write(conteudoArquivo.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -100,12 +99,12 @@ public class RepositorioEntidadeOperadora {
 		
 	}
 	
-	public boolean excluir(int identificador) {
+	public boolean excluir(long identificador) {
 	
 		boolean encontrarIdentificadorFlag = false;
 		StringBuilder conteudoArquivo = new StringBuilder();
 		
-		try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+		try (BufferedReader reader = new BufferedReader(new FileReader("EntidadeOperadora.txt"))){
 			String linha;
 			while((linha = reader.readLine()) != null) {
 				if (linha.startsWith(identificador + ";")) {
@@ -119,7 +118,7 @@ public class RepositorioEntidadeOperadora {
 		}
 		
 		if (encontrarIdentificadorFlag) {
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter("Acao.txt"))) {
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter("EntidadeOperadora.txt"))) {
 				writer.write(conteudoArquivo.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -131,12 +130,12 @@ public class RepositorioEntidadeOperadora {
 		
 	}
 	
-	public Acao buscar(int identificador) {
+	public EntidadeOperadora buscar(long identificador) {
 		
-		Acao acao = null;
+		EntidadeOperadora entidadeOperadora = null;
 	    String[] partes = null;
 
-	    try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+	    try (BufferedReader reader = new BufferedReader(new FileReader("EntidadeOperadora.txt"))){
 	        String linha;
 	        while((linha = reader.readLine()) != null) {
 	            if (linha.startsWith(identificador + ";")) {
@@ -148,11 +147,11 @@ public class RepositorioEntidadeOperadora {
 	        e.printStackTrace();
 	    }
 	    
-	    if (partes != null && partes.length == 4) {  
-	        acao = new Acao(identificador, partes[1], LocalDate.parse(partes[2]), (Double.parseDouble(partes[3]))); 
+	    if (partes != null && partes.length == 5) {  
+	        entidadeOperadora = new EntidadeOperadora(identificador, partes[1], Boolean.parseBoolean(partes[2])); 
 	    }
 	    
-	    return acao;
+	    return entidadeOperadora;
 	}
 
 }
