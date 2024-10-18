@@ -26,11 +26,11 @@ public class EntidadeOperadora {
 	
 	private long identificador;
 	private String nome;
-	private double autorizadoAcao;
+	private boolean autorizadoAcao;
 	private double saldoAcao;
 	private double saldoTituloDivida;
 	
-	public EntidadeOperadora(long identificador, String nome, double autorizadoAcao) {
+	public EntidadeOperadora(long identificador, String nome, boolean autorizadoAcao) {
 		this.identificador = identificador;
 		this.nome = nome;
 		this.autorizadoAcao = autorizadoAcao;
@@ -48,11 +48,11 @@ public class EntidadeOperadora {
 		this.nome = nome;
 	}
 	
-	public double getAutorizadoAcao() {
+	public boolean getAutorizadoAcao() {
 		return autorizadoAcao;
 	}
 	
-	public void setAutorizadoAcao(double autorizadoAcao) {
+	public void setAutorizadoAcao(boolean autorizadoAcao) {
 		this.autorizadoAcao = autorizadoAcao;
 	}
 	
