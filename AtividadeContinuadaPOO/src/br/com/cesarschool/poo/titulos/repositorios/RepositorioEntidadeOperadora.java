@@ -108,7 +108,6 @@ public class RepositorioEntidadeOperadora {
 			String linha;
 			while((linha = reader.readLine()) != null) {
 				if (linha.startsWith(acao.getIdentificador() + ";")) {
-					conteudoArquivo.append("");
 					encontrarIdentificadorFlag = true;
 				} else {
 					conteudoArquivo.append(linha).append(System.lineSeparator());
