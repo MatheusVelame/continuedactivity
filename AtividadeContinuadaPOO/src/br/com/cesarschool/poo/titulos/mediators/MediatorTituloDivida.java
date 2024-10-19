@@ -52,5 +52,90 @@ package br.com.cesarschool.poo.titulos.mediators;
  * que ele retornar. Se o identificador for inválido, retornar null. 
  */
 public class MediatorTituloDivida {
+    private RepositorioTituloDivida repositorioTituloDivida;
 
+    private MediatorTituloDivida(){
+        this.repositorioTituloDivida=repositorioTituloDivida;
+    }
+    private String validar(TituloDivida titulo, int identificador, String nome, LocalDate dataDeValidade, double taxaJuros) {
+        if (identificador < 1 || identificador > 99999) {
+            return "Identificador deve estar entre 1 e 99999.";
+        } else if (nome == null || nome.trim().isEmpty()) {
+            return "Nome deve ser preenchido.";
+        } else if (nome.length() < 10 || nome.length() > 100) {
+            return "Nome deve ter entre 10 e 100 caracteres.";
+        } else if (dataDeValidade == null || dataDeValidade.isBefore(LocalDate.now().plusDays(180))) {
+            return "Data de validade deve ter pelo menos 180 dias à frente da data atual.";
+        } else if (taxaJuros <= 0) {
+            return "Valor unitário deve ser maior ou igual a zero.";
+        }
+        return null;
+    }
+
+    public String incluir(TituloDivida titulo) {
+
+        String erro = validar(titulo, TituloDivida.getIdentificador(), TituloDivida.getNome(), TituloDivida.getDataDeValidade(), TituloDivida.getTaxaJuros());
+
+        if (erro != null) {
+            return erro;
+        }
+
+        boolean sucesso = repositorioTituloDivida.incluir(titulo);
+
+        if (sucesso) {
+            return null;
+        }
+        else {
+            return "Título já existente";
+        }
+    }
+
+    public String alterar(TituloDivida titulo){
+        String erro = validar(titulo, TituloDivida.getIdentificador(), TituloDivida.getNome(), TituloDivida.getDataDeValidade(), TituloDivida.getTaxaJuros());
+
+        if(erro != null){
+            return erro;
+        }
+
+        boolean sucesso = repositorioTituloDivida.alterar(titulo);
+
+        if(sucesso){
+            return null;
+        }
+        else{
+            return "Título inexistente";
+        }
+    }
+
+    public String excluir(int identificador) {
+
+        String erro = validar(identificador);
+
+        if (erro != null) {
+            return "Ação inexistente";
+        }
+
+        boolean sucesso = repositorioTituloDivida.excluir(identificador);
+
+        if (sucesso) {
+            return null;
+        }
+        else {
+            return "Título inexistente";
+        }
+    }
+
+    public TituloDivida buscar(int identificador) {
+
+        String erro = validar(identificador);
+
+
+        if (erro != null) {
+            return null;
+        }
+
+        TituloDivida titulo = repositorioTituloDivida.buscar(identificador);
+
+        return titulo;
+    }
 }
