@@ -64,7 +64,7 @@ public class MediatorEntidadeOperadora {
 		
 	}
 	
-	public MediatorEntidadeOperadora getInstancia() {
+	public MediatorEntidadeOperadora getUnicaInstancia() {
         if (unicaInstancia == null) {
         	unicaInstancia = new MediatorEntidadeOperadora();
         }
