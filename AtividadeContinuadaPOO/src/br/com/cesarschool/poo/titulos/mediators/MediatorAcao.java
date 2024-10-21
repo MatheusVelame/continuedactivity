@@ -59,10 +59,9 @@ public class MediatorAcao {
     private RepositorioAcao repositorioAcao;
     private LocalDate dataAtual;
 
-    public MediatorAcao(RepositorioAcao repositorioAcao) {
-        this.repositorioAcao = repositorioAcao;
-        this.dataAtual = LocalDate.now();
-    }
+    public MediatorAcao() {
+        
+     }
 
     private String validar(Acao acao, int identificador, String nome, 
                            LocalDate dataDeValidade, double valorUnitario) {
