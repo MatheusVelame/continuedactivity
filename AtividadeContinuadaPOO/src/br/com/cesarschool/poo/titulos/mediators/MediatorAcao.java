@@ -64,15 +64,16 @@ public class MediatorAcao {
         this.dataAtual = LocalDate.now();
     }
 
-
-    private String validar(Acao acao, int identificador, String nome, LocalDate dataDeValidade, double valorUnitario) {
+    private String validar(Acao acao, int identificador, String nome, 
+                           LocalDate dataDeValidade, double valorUnitario) {
         if (identificador < 1 || identificador > 99999) {
             return "Identificador deve estar entre 1 e 99999.";
         } else if (nome == null || nome.trim().isEmpty()) {
             return "Nome deve ser preenchido.";
         } else if (nome.length() < 10 || nome.length() > 100) {
             return "Nome deve ter entre 10 e 100 caracteres.";
-        } else if (dataDeValidade == null || dataDeValidade.isBefore(LocalDate.now().plusDays(30))) {
+        } else if (dataDeValidade == null || 
+                   dataDeValidade.isBefore(dataAtual.plusDays(30))) {
             return "Data de validade deve ter pelo menos 30 dias à frente da data atual.";
         } else if (valorUnitario <= 0) {
             return "Valor unitário deve ser maior que zero.";
@@ -80,73 +81,59 @@ public class MediatorAcao {
         return null;
     }
 
-
-    public String incluir(Acao acao) {
-
-        String erro = validar(acao, acao.getIdentificador(), acao.getNome(), acao.getDataDeValidade(), acao.getValorUnitario());
+    public String incluir(Acao acao) throws Exception {
+        String erro = validar(acao, acao.getIdentificador(), acao.getNome(), 
+                              acao.getDataDeValidade(), acao.getValorUnitario());
 
         if (erro != null) {
             return erro;
         }
 
-        boolean sucesso = RepositorioAcao.incluir(acao);
-
+        boolean sucesso = repositorioAcao.incluir(acao);
         if (sucesso) {
             return null;
-        }
-        else {
+        } else {
             return "Ação já existente";
-            }
         }
     }
 
-    public String alterar(Acao acao){
-        String erro = validar(acao, acao.getIdentificador(), acao.getNome(), acao.getDataDeValidade(), acao.getValorUnitario());
+    public String alterar(Acao acao) throws Exception {
+        String erro = validar(acao, acao.getIdentificador(), acao.getNome(), 
+                              acao.getDataDeValidade(), acao.getValorUnitario());
 
-        if(erro != null){
+        if (erro != null) {
             return erro;
         }
 
-        boolean sucesso = RepositorioAcao.alterar(acao);
-
-        if(sucesso){
+        boolean sucesso = repositorioAcao.alterar(acao);
+        if (sucesso) {
             return null;
-        }
-        else{
+        } else {
             return "Ação inexistente";
         }
     }
 
-        public String excluir(int identificador) {
-
-            String erro = validar(identificador);
-
-            if (erro != null) {
-                return "Ação inexistente";
-            }
-
-            boolean sucesso = RepositorioAcao.excluir(identificador);
-
-            if (sucesso) {
-                return null;
-            }
-            else {
-                return "Ação inexistente";
-            }
+    public String excluir(int identificador) throws Exception {
+        if (identificador < 1 || identificador > 99999) {
+            return "Ação inexistente";
         }
 
-        public Acao buscar(int identificador) {
-
-            String erro = validar(identificador);
-
-
-            if (erro != null) {
-                return null;
-            }
-
-            Acao acao = repositorioAcao.buscar(identificador);
-
-            return acao;
+        boolean sucesso = repositorioAcao.excluir(identificador);
+        if (sucesso) {
+            return null;
+        } else {
+            return "Ação inexistente";
         }
+    }
+
+    public Acao buscar(int identificador) throws Exception {
+        if (identificador < 1 || identificador > 99999) {
+            return null;
+        }
+
+        Acao acao = repositorioAcao.buscar(identificador);
+        return acao;
+    }
+}
 
 

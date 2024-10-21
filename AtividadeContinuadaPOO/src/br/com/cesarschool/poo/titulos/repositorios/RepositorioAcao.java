@@ -14,11 +14,7 @@ import java.util.List;
 public class RepositorioAcao {
 
 	public boolean incluir(Acao acao) throws Exception {
-		String erroValidacao = validar(acao);
-		if (erroValidacao != null) {
-			throw new Exception(erroValidacao);
-		}
-
+		
 		try {
 			List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
 			for (String linha : linhas) {
@@ -40,13 +36,12 @@ public class RepositorioAcao {
 		}
 	}
 
-	public boolean alterar(Acao acao) throws Exception {
-		String erroValidacao = validar(acao);
-		if (erroValidacao != null) {
-			throw new Exception(erroValidacao);
-		}
+	
 
-		try {
+	public boolean alterar(Acao acao) throws Exception {
+		
+		
+			try {
 			List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
 			boolean encontrado = false;
 			List<String> novasLinhas = new ArrayList<>();
@@ -104,24 +99,24 @@ public class RepositorioAcao {
 	}
 
 	public Acao buscar(int identificador) throws Exception {
-		try {
-			List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
+	    try {
+	        List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
+	        for (String linha : linhas) {
+	            String[] partes = linha.split(";");
+	            if (partes.length < 4) {
+	                continue; 
+	            }
 
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
-
-				if (id == identificador) {
-					String nome = partes[1];
-					LocalDate dataValidade = LocalDate.parse(partes[2]);
-					double valorUnitario = Double.parseDouble(partes[3]);
-					return new Acao(id, nome, dataValidade, valorUnitario);
-				}
-			}
-
-			return null;
-
-		} catch (IOException e) {
-			throw new Exception("Erro ao buscar ação no arquivo: " + e.getMessage(), e);
-		}
+	            int id = Integer.parseInt(partes[0]);
+	            if (id == identificador) {
+	                String nome = partes[1];
+	                LocalDate dataValidade = LocalDate.parse(partes[2]);
+	                double valorUnitario = Double.parseDouble(partes[3]);
+	                return new Acao(id, nome, dataValidade, valorUnitario);
+	            }
+	        }
+	    } catch (IOException e) {
+	        throw new Exception("Erro ao buscar ação no arquivo: " + e.getMessage(), e);
+	    }
+	    return null; 
 	}
