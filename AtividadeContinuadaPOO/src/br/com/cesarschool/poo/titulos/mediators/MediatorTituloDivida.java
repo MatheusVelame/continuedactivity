@@ -1,5 +1,9 @@
 package br.com.cesarschool.poo.titulos.mediators;
 
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
+
+import java.time.LocalDate;
 /*
  * Deve ser um singleton.
  * 
@@ -51,13 +55,21 @@ package br.com.cesarschool.poo.titulos.mediators;
  * Se este for válido, deve chamar o buscar do repositório, retornando o 
  * que ele retornar. Se o identificador for inválido, retornar null. 
  */
+
+
 public class MediatorTituloDivida {
     private RepositorioTituloDivida repositorioTituloDivida;
 
-    private MediatorTituloDivida(){
-        this.repositorioTituloDivida=repositorioTituloDivida;
+    public MediatorTituloDivida() {
+        
     }
-    private String validar(TituloDivida titulo, int identificador, String nome, LocalDate dataDeValidade, double taxaJuros) {
+
+    private String validar(TituloDivida titulo) {
+        int identificador = titulo.getIdentificador();
+        String nome = titulo.getNome();
+        LocalDate dataDeValidade = titulo.getDataDeValidade();
+        double taxaJuros = titulo.getTaxaJuros();
+
         if (identificador < 1 || identificador > 99999) {
             return "Identificador deve estar entre 1 e 99999.";
         } else if (nome == null || nome.trim().isEmpty()) {
@@ -66,15 +78,14 @@ public class MediatorTituloDivida {
             return "Nome deve ter entre 10 e 100 caracteres.";
         } else if (dataDeValidade == null || dataDeValidade.isBefore(LocalDate.now().plusDays(180))) {
             return "Data de validade deve ter pelo menos 180 dias à frente da data atual.";
-        } else if (taxaJuros <= 0) {
-            return "Valor unitário deve ser maior ou igual a zero.";
+        } else if (taxaJuros < 0) {
+            return "Taxa de juros deve ser maior ou igual a zero.";
         }
         return null;
     }
 
-    public String incluir(TituloDivida titulo) {
-
-        String erro = validar(titulo, TituloDivida.getIdentificador(), TituloDivida.getNome(), TituloDivida.getDataDeValidade(), TituloDivida.getTaxaJuros());
+    public String incluir(TituloDivida titulo) throws Exception {
+        String erro = validar(titulo);
 
         if (erro != null) {
             return erro;
@@ -84,53 +95,43 @@ public class MediatorTituloDivida {
 
         if (sucesso) {
             return null;
-        }
-        else {
+        } else {
             return "Título já existente";
         }
     }
 
-    public String alterar(TituloDivida titulo){
-        String erro = validar(titulo, TituloDivida.getIdentificador(), TituloDivida.getNome(), TituloDivida.getDataDeValidade(), TituloDivida.getTaxaJuros());
+    public String alterar(TituloDivida titulo) throws Exception {
+        String erro = validar(titulo);
 
-        if(erro != null){
+        if (erro != null) {
             return erro;
         }
 
         boolean sucesso = repositorioTituloDivida.alterar(titulo);
 
-        if(sucesso){
+        if (sucesso) {
             return null;
-        }
-        else{
+        } else {
             return "Título inexistente";
         }
     }
 
-    public String excluir(int identificador) {
-
-        String erro = validar(identificador);
-
-        if (erro != null) {
-            return "Ação inexistente";
+    public String excluir(int identificador) throws Exception {
+        if (identificador < 1 || identificador > 99999) {
+            return "Identificador deve estar entre 1 e 99999.";
         }
 
         boolean sucesso = repositorioTituloDivida.excluir(identificador);
 
         if (sucesso) {
             return null;
-        }
-        else {
+        } else {
             return "Título inexistente";
         }
     }
 
-    public TituloDivida buscar(int identificador) {
-
-        String erro = validar(identificador);
-
-
-        if (erro != null) {
+    public TituloDivida buscar(int identificador) throws Exception {
+        if (identificador < 1 || identificador > 99999) {
             return null;
         }
 
@@ -138,3 +139,4 @@ public class MediatorTituloDivida {
 
         return titulo;
     }
+}

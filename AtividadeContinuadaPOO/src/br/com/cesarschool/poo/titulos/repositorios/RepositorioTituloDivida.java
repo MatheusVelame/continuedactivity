@@ -38,11 +38,7 @@ import java.util.List;
 public class RepositorioTituloDivida {
 
 	public boolean incluir(TituloDivida titulo) throws Exception {
-		String erroValidacao = validar(titulo);
-		if (erroValidacao != null) {
-			throw new Exception(erroValidacao);
-		}
-
+		
 		try {
 			List<String> linhas = Files.readAllLines(Paths.get("TituloDivida.txt"));
 			for (String linha : linhas) {
@@ -65,11 +61,6 @@ public class RepositorioTituloDivida {
 	}
 
 	public boolean alterar(TituloDivida titulo) throws Exception {
-		String erroValidacao = validar(titulo);
-		if (erroValidacao != null) {
-			throw new Exception(erroValidacao);
-		}
-
 		try {
 			List<String> linhas = Files.readAllLines(Paths.get("TituloDivida.txt"));
 			boolean encontrado = false;
