@@ -2,19 +2,17 @@ package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.com.cesarschool.poo.titulos.entidades.Acao;
 
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado Acao.txt os dados dos objetos do tipo
- * Acao. Seguem abaixo exemplos de linhas (identificador, nome, dataValidade, valorUnitario)
- * 
+ * Acao. Seguem abaixo exemplos de linhas. (identificador, nome, dataValidade, valorUnitario)
+ *
     1;PETROBRAS;2024-12-12;30.33
     2;BANCO DO BRASIL;2026-01-01;21.21
     3;CORREIOS;2027-11-11;6.12 
@@ -37,111 +35,124 @@ import java.util.List;
 
 public class RepositorioAcao {
 
-	public boolean incluir(Acao acao) throws Exception {
-		
-		try {
-			List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
+	public boolean incluir(Acao acao) {
 
-				if (id == acao.getIdentificador()) {
-					return false;
+		String objetosAcao = (acao.getIdentificador() + ";" + acao.getNome() + ";" + acao.getDataDeValidade() + ";" + acao.getValorUnitario());
+		boolean encontrarIdentificadorFlag = true;
+
+		try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+			String linha ;
+			while((linha = reader.readLine()) != null) {
+				if (linha.startsWith(acao.getIdentificador() + ";")) {  // Usa startsWith para verificar o identificador
+					encontrarIdentificadorFlag = false;
+					break;
 				}
 			}
 
-			String novaLinha = acao.getIdentificador() + ";" + acao.getNome() + ";" +
-					acao.getDataDeValidade() + ";" + acao.getValorUnitario();
-			Files.write(Paths.get("Acao.txt"), Collections.singletonList(novaLinha), StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (encontrarIdentificadorFlag) {
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter("Acao.txt", true))) {
+				writer.write(objetosAcao);
+				writer.newLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return true;
-
-		} catch (IOException e) {
-			throw new Exception("Erro ao incluir ação no arquivo: " + e.getMessage(), e);
-		}
-	}
-
-	
-
-	public boolean alterar(Acao acao) throws Exception {
-		
-		
-			try {
-			List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
-			boolean encontrado = false;
-			List<String> novasLinhas = new ArrayList<>();
-
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
-
-				if (id == acao.getIdentificador()) {
-					linha = acao.getIdentificador() + ";" + acao.getNome() + ";" +
-							acao.getDataDeValidade() + ";" + acao.getValorUnitario();
-					encontrado = true;
-				}
-
-				novasLinhas.add(linha);
-			}
-
-			if (encontrado) {
-				Files.write(Paths.get("Acao.txt"), novasLinhas);
-				return true;
-			}
+		} else {
 			return false;
-
-		} catch (IOException e) {
-			throw new Exception("Erro ao alterar ação no arquivo: " + e.getMessage(), e);
 		}
+
 	}
 
-	public boolean excluir(int identificador) throws Exception {
-		try {
-			List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
-			boolean encontrado = false;
-			List<String> novasLinhas = new ArrayList<>();
+	public boolean alterar(Acao acao) {
 
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
+		String novosObjetosAcao = (acao.getIdentificador() + ";" + acao.getNome() + ";" + acao.getDataDeValidade() + ";" + acao.getValorUnitario());
+		boolean encontrarIdentificadorFlag = false;
+		StringBuilder conteudoArquivo = new StringBuilder();
 
-				if (id != identificador) {
-					novasLinhas.add(linha);
+		try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+			String linha;
+			while((linha = reader.readLine()) != null) {
+				if (linha.startsWith(acao.getIdentificador() + ";")) {  // Usa startsWith para verificar o identificador
+					conteudoArquivo.append(novosObjetosAcao).append(System.lineSeparator());
+					encontrarIdentificadorFlag = true;
 				} else {
-					encontrado = true;
+					 conteudoArquivo.append(linha).append(System.lineSeparator());  // Mantém as outras linhas inalteradas
 				}
 			}
-
-			if (encontrado) {
-				Files.write(Paths.get("Acao.txt"), novasLinhas);
-				return true;
-			}
-			return false;
-
 		} catch (IOException e) {
-			throw new Exception("Erro ao excluir ação no arquivo: " + e.getMessage(), e);
+			e.printStackTrace();
 		}
+
+		if (encontrarIdentificadorFlag) {
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter("Acao.txt"))) {
+				writer.write(conteudoArquivo.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
-	public Acao buscar(int identificador) throws Exception {
-	    try {
-	        List<String> linhas = Files.readAllLines(Paths.get("Acao.txt"));
-	        for (String linha : linhas) {
-	            String[] partes = linha.split(";");
-	            if (partes.length < 4) {
-	                continue; 
-	            }
+	public boolean excluir(int identificador) {
 
-	            int id = Integer.parseInt(partes[0]);
-	            if (id == identificador) {
-	                String nome = partes[1];
-	                LocalDate dataValidade = LocalDate.parse(partes[2]);
-	                double valorUnitario = Double.parseDouble(partes[3]);
-	                return new Acao(id, nome, dataValidade, valorUnitario);
+		boolean encontrarIdentificadorFlag = false;
+		StringBuilder conteudoArquivo = new StringBuilder();
+
+		try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+			String linha;
+			while((linha = reader.readLine()) != null) {
+				if (linha.startsWith(identificador + ";")) {
+					encontrarIdentificadorFlag = true;
+				} else {
+					conteudoArquivo.append(linha).append(System.lineSeparator());
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (encontrarIdentificadorFlag) {
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter("Acao.txt"))) {
+				writer.write(conteudoArquivo.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public Acao buscar(int identificador) {
+
+		Acao acao = null;
+	    String[] partes = null;
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader("Acao.txt"))){
+	        String linha;
+	        while((linha = reader.readLine()) != null) {
+	            if (linha.startsWith(identificador + ";")) {
+	                partes = linha.split(";");
+	                break;    
 	            }
 	        }
 	    } catch (IOException e) {
-	        throw new Exception("Erro ao buscar ação no arquivo: " + e.getMessage(), e);
+	        e.printStackTrace();
 	    }
-	    return null; 
+
+	    if (partes != null && partes.length == 4) {  
+	        acao = new Acao(identificador, partes[1], LocalDate.parse(partes[2]), (Double.parseDouble(partes[3]))); 
+	    }
+
+	    return acao;
 	}
-	}
+
+}
