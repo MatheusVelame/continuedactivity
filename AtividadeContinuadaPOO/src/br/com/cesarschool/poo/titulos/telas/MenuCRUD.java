@@ -76,14 +76,28 @@ public class MenuCRUD {
 
     private void incluirAcao() {
         System.out.println("\nIncluir Ação");
+        
         Acao acao = lerAcao();
-        boolean sucesso = repositorioAcao.incluir(acao);
+        if (acao == null) {
+            System.out.println("Erro: Não foi possível ler os dados da ação.");
+            return;
+        }
+
+        boolean sucesso;
+        try {
+            sucesso = repositorioAcao.incluir(acao);
+        } catch (Exception e) {
+            System.out.println("Erro ao incluir ação: " + e.getMessage());
+            return;
+        }
+
         if (sucesso) {
             System.out.println("Ação incluída com sucesso!");
         } else {
             System.out.println("Erro: Ação já existente com esse identificador.");
         }
     }
+
 
     private void alterarAcao() {
         System.out.println("\nAlterar Ação");
@@ -112,9 +126,11 @@ public class MenuCRUD {
     private void buscarAcao() {
         System.out.println("\nBuscar Ação");
         System.out.print("Informe o identificador da ação: ");
+        
         int id = scanner.nextInt();
-        scanner.nextLine();
+
         Acao acao = repositorioAcao.buscar(id);
+
         if (acao != null) {
             System.out.println("Ação encontrada: " + acao);
         } else {
