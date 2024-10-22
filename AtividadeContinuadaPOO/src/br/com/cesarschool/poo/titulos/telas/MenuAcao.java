@@ -1,55 +1,23 @@
 package br.com.cesarschool.poo.titulos.telas;
 
-import java.io.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 import br.com.cesarschool.poo.titulos.entidades.Acao;
-import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.com.cesarschool.poo.titulos.entidades.Transacao;
-import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
-import br.com.cesarschool.poo.titulos.mediators.MediatorAcao;
-import br.com.cesarschool.poo.titulos.mediators.MediatorEntidadeOperadora;
-import br.com.cesarschool.poo.titulos.mediators.MediatorOperacao;
-import br.com.cesarschool.poo.titulos.mediators.MediatorTituloDivida;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 
-public class MenuCRUD {
+public class MenuAcao {
     private final Scanner scanner = new Scanner(System.in);
     private final RepositorioAcao repositorioAcao = new RepositorioAcao();
-
-    public static void main(String[] args) {
-        MenuCRUD menu = new MenuCRUD();
-        menu.exibirMenuPrincipal(); 
-    }
-
-    public void exibirMenuPrincipal() {
-        int opcao;
-
-        do {
-            System.out.println("\nMenu Principal:");
-            System.out.println("1. Gerenciar Ação");
-            System.out.println("2. Gerenciar Entidade Operadora");
-            System.out.println("3. Gerenciar Operação");
-            System.out.println("4. Gerenciar Título de Dívida");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcao) {
-                case 1 -> menuAcao();
-                case 2 -> gerenciarEntidadeOperadora();
-                case 3 -> gerenciarOperacao();
-                case 4 -> gerenciarTituloDivida();
-                case 0 -> System.out.println("Saindo...");
-                default -> System.out.println("Opção inválida. Tente novamente.");
-            }
-        } while (opcao != 0);
-    }
-
+    private final MenuPrincipal menuPrincipal;
     
-    private void menuAcao() {
+
+    public MenuAcao(MenuPrincipal menuPrincipal) {
+        this.menuPrincipal = menuPrincipal;
+    }
+    
+    
+   public void menuAcao() {
         int opcaoAcao;
 
         do {
@@ -68,7 +36,7 @@ public class MenuCRUD {
                 case 2 -> alterarAcao();
                 case 3 -> excluirAcao();
                 case 4 -> buscarAcao();
-                case 0 -> System.out.println("Voltando ao Menu Principal...");
+                case 0 -> menuPrincipal.exibirMenuPrincipal();
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
         } while (opcaoAcao != 0);
@@ -157,10 +125,6 @@ public class MenuCRUD {
     }
 
     
-    private void gerenciarEntidadeOperadora() {
-        System.out.println("Gerenciamento de Entidade Operadora ainda não implementado.");
-    }
-
     private void gerenciarOperacao() {
         System.out.println("Gerenciamento de Operação ainda não implementado.");
     }
