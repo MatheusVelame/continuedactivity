@@ -8,6 +8,9 @@ import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /*
  * Deve ser um singleton.
@@ -124,7 +127,7 @@ public class MediatorOperacao {
     	return unicaInstancia;	
     }
     
-    public String realizarOperacao(boolean ehAcao, int entidadeCredito, int idEntidadeDebito, int idAcaoOuTitulo, double valor) {
+    public String realizarOperacao(boolean ehAcao, int entidadeCredito, int idEntidadeDebito, int idAcaoOuTitulo, double valor) throws IOException {
     	
     	Acao acao = null;
     	TituloDivida tituloDivida = null;
@@ -153,9 +156,17 @@ public class MediatorOperacao {
     	}
     	
     	if (ehAcao == true) {
-    		acao = mediatorAcao.buscar(idAcaoOuTitulo);
+    		try {
+				acao = mediatorAcao.buscar(idAcaoOuTitulo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
     	} else {
-    		tituloDivida = mediatorTituloDivida.buscar(idAcaoOuTitulo);
+    		try {
+				tituloDivida = mediatorTituloDivida.buscar(idAcaoOuTitulo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
     	}
     	
     	if (ehAcao) {
@@ -198,14 +209,30 @@ public class MediatorOperacao {
     	
     	if (ehAcao) {
     		Transacao novaTransacao = new Transacao(entidadeOperadoraCredito, entidadeOperadoraDebito, acao, null, valorDaOperacao, LocalDateTime.now());
+    		repositorioTransacao.incluir(novaTransacao);
     	} else {
     		Transacao novaTransacao = new Transacao(entidadeOperadoraCredito, entidadeOperadoraDebito, null, tituloDivida, valorDaOperacao, LocalDateTime.now());
+    		repositorioTransacao.incluir(novaTransacao);
     	}
+    	
+    	
+    	
+    	return null;
     	
     }
     
-    public Transacao gerarExtrato(int entidade) {
+    public Transacao[] gerarExtrato(long entidade) {
+    	Transacao[] entidadeCredora = repositorioTransacao.buscarPorEntidadeCredora(entidade);
+    	Transacao[] entidadeDevedora = repositorioTransacao.buscarPorEntidadeDevedora(entidade);
     	
+    	List<Transacao> transacoesCombinadas = new ArrayList<>();
+        Collections.addAll(transacoesCombinadas, entidadeCredora);
+        Collections.addAll(transacoesCombinadas, entidadeDevedora);
+        transacoesCombinadas.sort((t1, t2) -> t2.getDataHoraOperacao().compareTo(t1.getDataHoraOperacao()));
+
+        return transacoesCombinadas.toArray(new Transacao[0]);
+    	
+ 
     }
     	
 }

@@ -105,4 +105,46 @@ public class RepositorioTransacao {
 	    	return null;
 	    }
 	}
+	
+	public Transacao[] buscarPorEntidadeDevedora(long identificadorEntidadeDebito) {
+		List<Transacao> transacoesEncontradas = new ArrayList<>();
+		boolean encontrarIdentificadorFlag = false;
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader("Transacao.txt"))){
+	        String linha;
+	        while ((linha = reader.readLine()) != null) {
+	            String[] objetosLinha = linha.split(";");
+	            if (Long.parseLong(objetosLinha[0].trim()) == identificadorEntidadeDebito) {
+	            	encontrarIdentificadorFlag = true;
+	                EntidadeOperadora objetosCredito = new EntidadeOperadora(Long.parseLong(objetosLinha[0].trim()), objetosLinha[1].trim(), Boolean.parseBoolean(objetosLinha[2].trim()));
+	                EntidadeOperadora objetosDebito = new EntidadeOperadora(Long.parseLong(objetosLinha[5].trim()), objetosLinha[6].trim(), Boolean.parseBoolean(objetosLinha[7].trim()));
+	                
+	                Acao acao = null;
+	                TituloDivida tituloDivida = null;
+	                
+	                if (!objetosLinha[10].equals("null")) {
+	                    acao = new Acao(Integer.parseInt(objetosLinha[10].trim()), objetosLinha[11].trim(), LocalDate.parse(objetosLinha[12].trim()), Double.parseDouble(objetosLinha[13].trim()));
+	                }
+	                
+	                if (!objetosLinha[14].equals("null")) {
+	                    tituloDivida = new TituloDivida(Integer.parseInt(objetosLinha[14].trim()), objetosLinha[15].trim(), LocalDate.parse(objetosLinha[16].trim()), Double.parseDouble(objetosLinha[17].trim()));
+	                }
+	                
+	                double valorOperacao = Double.parseDouble(objetosLinha[18].trim());
+	                LocalDateTime dataHoraOperacao = LocalDateTime.parse(objetosLinha[19].trim());
+	                
+	                Transacao transacao = new Transacao(objetosCredito, objetosDebito, acao, tituloDivida, valorOperacao, dataHoraOperacao);
+	                transacoesEncontradas.add(transacao);
+	            }
+	        }
+	    } catch (IOException | NumberFormatException e) {
+	        e.printStackTrace();
+	    }
+		
+		if(encontrarIdentificadorFlag) {
+	    	return transacoesEncontradas.toArray(new Transacao[0]);
+	    } else {
+	    	return null;
+	    }
+	}
 }
