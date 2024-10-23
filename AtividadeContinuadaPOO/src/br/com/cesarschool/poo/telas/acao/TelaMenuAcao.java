@@ -1,18 +1,19 @@
-package br.com.cesarschool.poo.titulos.telas;
+package br.com.cesarschool.poo.telas.acao;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import br.com.cesarschool.poo.telas.TelaMenuPrincipal;
 import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
 
-public class MenuAcao {
+public class TelaMenuAcao {
     private final Scanner scanner = new Scanner(System.in);
     private final RepositorioAcao repositorioAcao = new RepositorioAcao();
-    private final MenuPrincipal menuPrincipal;
+    private final TelaMenuPrincipal menuPrincipal;
     
 
-    public MenuAcao(MenuPrincipal menuPrincipal) {
+    public TelaMenuAcao(TelaMenuPrincipal menuPrincipal) {
         this.menuPrincipal = menuPrincipal;
     }
     

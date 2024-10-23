@@ -1,22 +1,22 @@
-package br.com.cesarschool.poo.titulos.telas;
+package br.com.cesarschool.poo.telas.titulodivida;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
+import br.com.cesarschool.poo.telas.TelaMenuPrincipal;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
 
 
-public class MenuTituloDivida {
+public class TelaMenuTituloDivida {
 	private final Scanner scanner = new Scanner(System.in);
     private final RepositorioTituloDivida repositorioTituloDivida = new RepositorioTituloDivida();
-    private final MenuPrincipal menuPrincipal;
+    private final TelaMenuPrincipal menuPrincipal;
 
     
-    public MenuTituloDivida(MenuPrincipal menuPrincipal) {
+    public TelaMenuTituloDivida(TelaMenuPrincipal menuPrincipal) {
         this.menuPrincipal = menuPrincipal;
     }
    

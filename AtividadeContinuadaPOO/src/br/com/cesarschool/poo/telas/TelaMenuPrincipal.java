@@ -1,15 +1,18 @@
-package br.com.cesarschool.poo.titulos.telas;
+package br.com.cesarschool.poo.telas;
 
 import java.util.Scanner;
 
+import br.com.cesarschool.poo.telas.acao.TelaMenuAcao;
+import br.com.cesarschool.poo.telas.titulodivida.TelaMenuTituloDivida;
 
 
-public class MenuPrincipal {
+
+public class TelaMenuPrincipal {
 	private final Scanner scanner = new Scanner(System.in);
-	private final MenuTituloDivida menuTituloDivida = new MenuTituloDivida(this); 
-    private final MenuAcao menuAcao = new MenuAcao(this);
+	private final TelaMenuTituloDivida menuTituloDivida = new TelaMenuTituloDivida(this); 
+    private final TelaMenuAcao menuAcao = new TelaMenuAcao(this);
     public static void main(String[] args) {
-        MenuPrincipal menu = new MenuPrincipal();
+        TelaMenuPrincipal menu = new TelaMenuPrincipal();
         menu.exibirMenuPrincipal();
     }
 
