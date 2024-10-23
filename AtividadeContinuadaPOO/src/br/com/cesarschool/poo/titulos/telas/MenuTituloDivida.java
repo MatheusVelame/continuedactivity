@@ -28,10 +28,10 @@ public class MenuTituloDivida {
 
     do {
         System.out.println("\nGerenciar Ação:");
-        System.out.println("1. Incluir Ação");
-        System.out.println("2. Alterar Ação");
-        System.out.println("3. Excluir Ação");
-        System.out.println("4. Buscar Ação");
+        System.out.println("1. Incluir titulo");
+        System.out.println("2. Alterar titulo");
+        System.out.println("3. Excluir titulo");
+        System.out.println("4. Buscar titulo");
         System.out.println("0. Voltar ao Menu Principal");
         System.out.print("Escolha uma opção: ");
         opcaoTitulo = scanner.nextInt();
