@@ -13,7 +13,6 @@ import java.time.LocalDate;
  * Deve ter um m�todo p�blico double calcularPrecoTransacao(double montante): o pre�o 
  * da transa��o � o produto do montante pelo valorUnitario.
  */
-import java.time.LocalDate;
 
 public class Acao extends Ativo {
 
