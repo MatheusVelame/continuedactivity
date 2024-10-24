@@ -7,12 +7,12 @@ import java.util.Scanner;
 import br.com.cesarschool.poo.telas.TelaMenuPrincipal;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
-import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
+import br.com.cesarschool.poo.titulos.mediators.MediatorTituloDivida;
 
 
 public class TelaMenuTituloDivida {
 	private final Scanner scanner = new Scanner(System.in);
-    private final RepositorioTituloDivida repositorioTituloDivida = new RepositorioTituloDivida();
+    private final MediatorTituloDivida mediatorTitulo = new MediatorTituloDivida();
     private final TelaMenuPrincipal menuPrincipal;
 
     
@@ -77,18 +77,18 @@ private void incluirTitulo() {
         return;
     }
 
-    boolean sucesso;
+    String erro;
     try {
-        sucesso = repositorioTituloDivida.incluir(titulo);
+        erro = mediatorTitulo.incluir(titulo);
     } catch (Exception e) {
         System.out.println("Erro ao incluir ação: " + e.getMessage());
         return;
     }
 
-    if (sucesso) {
+    if (erro == null) {
         System.out.println("Ação incluída com sucesso!");
     } else {
-        System.out.println("Erro: Ação já existente com esse identificador.");
+        System.out.println(erro);
     }    
 }
 
@@ -96,11 +96,11 @@ private void incluirTitulo() {
 	    System.out.println("\nAlterar Ação");
 	    try {
 	        TituloDivida titulo = lerTitulo();
-	        boolean sucesso = repositorioTituloDivida.alterar(titulo);
-	        if (sucesso) {
+	        String erro = mediatorTitulo.alterar(titulo);
+	        if (erro == null) {
 	            System.out.println("Ação alterada com sucesso!");
 	        } else {
-	            System.out.println("Erro: Ação não encontrada.");
+	            System.out.println(erro);
 	        }
 	    } catch (Exception e) {
 	        System.out.println("Erro ao alterar a ação: " + e.getMessage());
@@ -116,11 +116,11 @@ private void incluirTitulo() {
 	        int id = scanner.nextInt();
 	        scanner.nextLine();
 	        
-	        boolean sucesso = repositorioTituloDivida.excluir(id);
-	        if (sucesso) {
+	        String erro = mediatorTitulo.excluir(id);
+	        if (erro == null) {
 	            System.out.println("Ação excluída com sucesso!");
 	        } else {
-	            System.out.println("Erro: Ação não encontrada.");
+	            System.out.println(erro);
 	        }
 	    } catch (InputMismatchException e) {
 	        System.out.println("Erro: Identificador inválido. Por favor, insira um número.");
@@ -139,7 +139,7 @@ private void incluirTitulo() {
 	        int id = scanner.nextInt();
 	        scanner.nextLine();  
 
-	        TituloDivida titulo = repositorioTituloDivida.buscar(id);
+	        TituloDivida titulo = mediatorTitulo.buscar(id);
 
 	        if (titulo != null) {
 	            System.out.println("Ação encontrada: " + titulo);

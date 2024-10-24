@@ -2,6 +2,8 @@ package br.com.cesarschool.poo.telas;
 
 import java.util.Scanner;
 
+import br.com.cesarschool.poo.telas.acao.TelaBuscarAcao;
+import br.com.cesarschool.poo.telas.acao.TelaExcluirAcao;
 import br.com.cesarschool.poo.telas.acao.TelaMenuAcao;
 import br.com.cesarschool.poo.telas.titulodivida.TelaMenuTituloDivida;
 
@@ -10,7 +12,15 @@ import br.com.cesarschool.poo.telas.titulodivida.TelaMenuTituloDivida;
 public class TelaMenuPrincipal {
 	private final Scanner scanner = new Scanner(System.in);
 	private final TelaMenuTituloDivida menuTituloDivida = new TelaMenuTituloDivida(this); 
-    private final TelaMenuAcao menuAcao = new TelaMenuAcao(this);
+	private final TelaBuscarAcao telaBuscarAcao = new TelaBuscarAcao(null);
+	private final TelaExcluirAcao telaExcluirAcao = new TelaExcluirAcao();
+    private final TelaMenuAcao menuAcao = new TelaMenuAcao(this, telaBuscarAcao);
+    
+    public TelaMenuPrincipal(){
+    	
+    }
+    
+    
     public static void main(String[] args) {
         TelaMenuPrincipal menu = new TelaMenuPrincipal();
         menu.exibirMenuPrincipal();

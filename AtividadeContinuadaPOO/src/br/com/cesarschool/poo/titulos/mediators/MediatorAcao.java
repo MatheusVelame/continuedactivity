@@ -56,7 +56,7 @@ import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
  * que ele retornar. Se o identificador for inválido, retornar null. 
  */
 public class MediatorAcao {
-    private RepositorioAcao repositorioAcao;
+    private RepositorioAcao repositorioAcao = new RepositorioAcao();;
     private LocalDate dataAtual;
 
     public MediatorAcao() {
