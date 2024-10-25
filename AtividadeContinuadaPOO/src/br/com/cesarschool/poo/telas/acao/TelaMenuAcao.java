@@ -1,5 +1,6 @@
 package br.com.cesarschool.poo.telas.acao;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public class TelaMenuAcao {
         this.menuPrincipal = menuPrincipal;  
     }
 
-    public void menuAcao() {
+    public void menuAcao() throws IOException {
         int opcaoAcao;
 
         do {

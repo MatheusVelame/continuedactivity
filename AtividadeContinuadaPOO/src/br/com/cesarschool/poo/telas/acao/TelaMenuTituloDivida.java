@@ -1,5 +1,6 @@
 package br.com.cesarschool.poo.telas.acao;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ import br.com.cesarschool.poo.titulos.mediators.MediatorTituloDivida;
 
 public class TelaMenuTituloDivida {
 	private final Scanner scanner = new Scanner(System.in);
-    private final MediatorTituloDivida mediatorTitulo = new MediatorTituloDivida();
+    private final MediatorTituloDivida mediatorTitulo = MediatorTituloDivida.getInstancia();
     private final TelaMenuPrincipal menuPrincipal;
 
     
@@ -20,7 +21,7 @@ public class TelaMenuTituloDivida {
     
     
     
-   public void menuTitulo(){
+   public void menuTitulo() throws IOException{
     int opcaoTitulo;
 
     do {

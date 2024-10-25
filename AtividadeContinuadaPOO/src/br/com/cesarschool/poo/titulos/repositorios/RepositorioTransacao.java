@@ -64,7 +64,7 @@ public class RepositorioTransacao {
 	}
 	
 	
-	public Transacao[] buscarPorEntidadeCredora(long identificadorEntidadeCredito) {
+	public Transacao[] buscarPorEntidadeCredora(int identificadorEntidadeCredito) {
 	    List<Transacao> transacoesEncontradas = new ArrayList<>();
 	    boolean encontrarIdentificadorFlag = false;
 	    

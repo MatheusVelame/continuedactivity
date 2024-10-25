@@ -181,7 +181,7 @@ public class MediatorOperacao {
     	
     	if (ehAcao == true) {
     		if(acao.getValorUnitario() > valor) {
-    			return "Valor da operação e menor do que o valor unitário da ação";
+    			return "Valor da operação é menor do que o valor unitário da ação";
     		}
     	}
     	
@@ -221,7 +221,7 @@ public class MediatorOperacao {
     	
     }
     
-    public Transacao[] gerarExtrato(long entidade) {
+    public Transacao[] gerarExtrato(int entidade) {
     	Transacao[] entidadeCredora = repositorioTransacao.buscarPorEntidadeCredora(entidade);
     	Transacao[] entidadeDevedora = repositorioTransacao.buscarPorEntidadeDevedora(entidade);
     	
