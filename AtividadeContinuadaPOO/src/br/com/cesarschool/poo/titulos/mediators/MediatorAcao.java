@@ -56,83 +56,63 @@ import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
  * que ele retornar. Se o identificador for inválido, retornar null. 
  */
 public class MediatorAcao {
-    private RepositorioAcao repositorioAcao = new RepositorioAcao();;
-    private LocalDate dataAtual;
+    private static final MediatorAcao instance = new MediatorAcao(); 
+    private RepositorioAcao repositorioAcao = new RepositorioAcao(); 
+    private LocalDate dataAtual = LocalDate.now();
 
-    public MediatorAcao() {
-        
-     }
+   
+    private MediatorAcao() { 
+    	
+    }
 
-    private String validar(Acao acao, int identificador, String nome, 
-                           LocalDate dataDeValidade, double valorUnitario) {
-        if (identificador < 1 || identificador > 99999) {
+    
+    public static MediatorAcao getInstance() {
+        return instance;
+    }
+
+    private String validar(Acao acao) {
+        if (acao.getIdentificador() < 1 || acao.getIdentificador() > 99999) {
             return "Identificador deve estar entre 1 e 99999.";
-        } else if (nome == null || nome.trim().isEmpty()) {
+        } else if (acao.getNome() == null || acao.getNome().trim().isEmpty()) {
             return "Nome deve ser preenchido.";
-        } else if (nome.length() < 10 || nome.length() > 100) {
+        } else if (acao.getNome().length() < 10 || acao.getNome().length() > 100) {
             return "Nome deve ter entre 10 e 100 caracteres.";
-        } else if (dataDeValidade == null || 
-                   dataDeValidade.isBefore(dataAtual.plusDays(30))) {
+        } else if (acao.getDataDeValidade() == null || 
+                   acao.getDataDeValidade().isBefore(dataAtual.plusDays(30))) {
             return "Data de validade deve ter pelo menos 30 dias à frente da data atual.";
-        } else if (valorUnitario <= 0) {
+        } else if (acao.getValorUnitario() <= 0) {
             return "Valor unitário deve ser maior que zero.";
         }
         return null;
     }
 
-    public String incluir(Acao acao) throws Exception {
-        String erro = validar(acao, acao.getIdentificador(), acao.getNome(), 
-                              acao.getDataDeValidade(), acao.getValorUnitario());
-
+    public String incluir(Acao acao) {
+        String erro = validar(acao);
         if (erro != null) {
             return erro;
         }
-
-        boolean sucesso = repositorioAcao.incluir(acao);
-        if (sucesso) {
-            return null;
-        } else {
-            return "Ação já existente";
-        }
+        return repositorioAcao.incluir(acao) ? null : "Ação já existente";
     }
 
-    public String alterar(Acao acao) throws Exception {
-        String erro = validar(acao, acao.getIdentificador(), acao.getNome(), 
-                              acao.getDataDeValidade(), acao.getValorUnitario());
-
+    public String alterar(Acao acao) {
+        String erro = validar(acao);
         if (erro != null) {
             return erro;
         }
-
-        boolean sucesso = repositorioAcao.alterar(acao);
-        if (sucesso) {
-            return null;
-        } else {
-            return "Ação inexistente";
-        }
+        return repositorioAcao.alterar(acao) ? null : "Ação inexistente";
     }
 
-    public String excluir(int identificador) throws Exception {
+    public String excluir(int identificador) {
         if (identificador < 1 || identificador > 99999) {
             return "Ação inexistente";
         }
-
-        boolean sucesso = repositorioAcao.excluir(identificador);
-        if (sucesso) {
-            return null;
-        } else {
-            return "Ação inexistente";
-        }
+        return repositorioAcao.excluir(identificador) ? null : "Ação inexistente";
     }
 
-    public Acao buscar(int identificador) throws Exception {
+    public Acao buscar(int identificador) {
         if (identificador < 1 || identificador > 99999) {
             return null;
         }
-
-        Acao acao = repositorioAcao.buscar(identificador);
-        return acao;
+        return repositorioAcao.buscar(identificador);
     }
 }
-
-

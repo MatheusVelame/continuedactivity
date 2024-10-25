@@ -1,10 +1,8 @@
-package br.com.cesarschool.poo.telas.titulodivida;
+package br.com.cesarschool.poo.telas.acao;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import br.com.cesarschool.poo.telas.TelaMenuPrincipal;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 import br.com.cesarschool.poo.titulos.mediators.MediatorTituloDivida;
@@ -19,7 +17,6 @@ public class TelaMenuTituloDivida {
     public TelaMenuTituloDivida(TelaMenuPrincipal menuPrincipal) {
         this.menuPrincipal = menuPrincipal;
     }
-   
     
     
     
@@ -27,7 +24,7 @@ public class TelaMenuTituloDivida {
     int opcaoTitulo;
 
     do {
-        System.out.println("\nGerenciar Ação:");
+        System.out.println("\nGerenciar Titulo:");
         System.out.println("1. Incluir titulo");
         System.out.println("2. Alterar titulo");
         System.out.println("3. Excluir titulo");
@@ -69,11 +66,11 @@ private TituloDivida lerTitulo() {
 
 
 private void incluirTitulo() {
-	System.out.println("\nIncluir Ação");
+	System.out.println("\nIncluir titulo");
     
     TituloDivida titulo = lerTitulo();
     if (titulo == null) {
-        System.out.println("Erro: Não foi possível ler os dados da ação.");
+        System.out.println("Erro: Não foi possível ler os dados do titulo.");
         return;
     }
 
@@ -81,29 +78,29 @@ private void incluirTitulo() {
     try {
         erro = mediatorTitulo.incluir(titulo);
     } catch (Exception e) {
-        System.out.println("Erro ao incluir ação: " + e.getMessage());
+        System.out.println("Erro ao incluir titulo: " + e.getMessage());
         return;
     }
 
     if (erro == null) {
-        System.out.println("Ação incluída com sucesso!");
+        System.out.println("titulo incluído com sucesso!");
     } else {
         System.out.println(erro);
     }    
 }
 
 	private TituloDivida alterarTitulo() {
-	    System.out.println("\nAlterar Ação");
+	    System.out.println("\nAlterar titulo");
 	    try {
 	        TituloDivida titulo = lerTitulo();
 	        String erro = mediatorTitulo.alterar(titulo);
 	        if (erro == null) {
-	            System.out.println("Ação alterada com sucesso!");
+	            System.out.println("titulo alterado com sucesso!");
 	        } else {
 	            System.out.println(erro);
 	        }
 	    } catch (Exception e) {
-	        System.out.println("Erro ao alterar a ação: " + e.getMessage());
+	        System.out.println("Erro ao alterar o titulo: " + e.getMessage());
 	        e.printStackTrace();
 	    }
 	    return null;
@@ -111,14 +108,14 @@ private void incluirTitulo() {
 	
 	private void excluirTitulo() {
 	    try {
-	        System.out.println("\nExcluir Ação");
-	        System.out.print("Informe o identificador da ação: ");
+	        System.out.println("\nExcluir titulo");
+	        System.out.print("Informe o identificador do titulo: ");
 	        int id = scanner.nextInt();
 	        scanner.nextLine();
 	        
 	        String erro = mediatorTitulo.excluir(id);
 	        if (erro == null) {
-	            System.out.println("Ação excluída com sucesso!");
+	            System.out.println("titulo excluído com sucesso!");
 	        } else {
 	            System.out.println(erro);
 	        }
@@ -133,8 +130,8 @@ private void incluirTitulo() {
 
 	private void buscarTitulo() {
 	    try {
-	        System.out.println("\nBuscar Ação");
-	        System.out.print("Informe o identificador da ação: ");
+	        System.out.println("\nBuscar titulo");
+	        System.out.print("Informe o identificador do titulo: ");
 	        
 	        int id = scanner.nextInt();
 	        scanner.nextLine();  
@@ -142,9 +139,9 @@ private void incluirTitulo() {
 	        TituloDivida titulo = mediatorTitulo.buscar(id);
 
 	        if (titulo != null) {
-	            System.out.println("Ação encontrada: " + titulo);
+	            System.out.println("titulo encontrado: " + titulo);
 	        } else {
-	            System.out.println("Erro: Ação não encontrada.");
+	            System.out.println("Erro: titulo não encontrada.");
 	        }
 	    } catch (InputMismatchException e) {
 	        System.out.println("Erro: Identificador inválido. Insira um número.");

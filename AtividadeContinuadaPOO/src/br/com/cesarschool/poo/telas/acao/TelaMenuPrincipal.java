@@ -1,34 +1,20 @@
-package br.com.cesarschool.poo.telas;
+package br.com.cesarschool.poo.telas.acao;
+
 
 import java.util.Scanner;
-
-import br.com.cesarschool.poo.telas.acao.TelaBuscarAcao;
-import br.com.cesarschool.poo.telas.acao.TelaExcluirAcao;
-import br.com.cesarschool.poo.telas.acao.TelaMenuAcao;
-import br.com.cesarschool.poo.telas.titulodivida.TelaMenuTituloDivida;
 
 
 
 public class TelaMenuPrincipal {
 	private final Scanner scanner = new Scanner(System.in);
 	private final TelaMenuTituloDivida menuTituloDivida = new TelaMenuTituloDivida(this); 
-	private final TelaBuscarAcao telaBuscarAcao = new TelaBuscarAcao(null);
-	private final TelaExcluirAcao telaExcluirAcao = new TelaExcluirAcao();
-    private final TelaMenuAcao menuAcao = new TelaMenuAcao(this, telaBuscarAcao);
-    
-    public TelaMenuPrincipal(){
-    	
-    }
-    
-    
+    private final TelaMenuAcao menuAcao = new TelaMenuAcao(this);
     public static void main(String[] args) {
         TelaMenuPrincipal menu = new TelaMenuPrincipal();
         menu.exibirMenuPrincipal();
     }
-
     public void exibirMenuPrincipal() {
         int opcao;
-
         do {
             System.out.println("\nMenu Principal:");
             System.out.println("1. Gerenciar Ação");
@@ -37,7 +23,6 @@ public class TelaMenuPrincipal {
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
-
             switch (opcao) {
                 case 1 -> menuAcao.menuAcao();  
                 case 2 -> menuTituloDivida.menuTitulo();  

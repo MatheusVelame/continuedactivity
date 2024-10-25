@@ -4,24 +4,18 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import br.com.cesarschool.poo.titulos.mediators.MediatorAcao;
-import br.com.cesarschool.poo.telas.TelaMenuPrincipal;
 import br.com.cesarschool.poo.titulos.entidades.Acao;
 
 public class TelaMenuAcao {
-    private final Scanner scanner = new Scanner(System.in);
-    private final MediatorAcao mediatorAcao = new MediatorAcao();
-    private final TelaMenuPrincipal menuPrincipal;
-    private final TelaBuscarAcao telaBuscaAcao;
-    private final TelaExcluirAcao telaExcluirAcao;
-    
-    public TelaMenuAcao(TelaMenuPrincipal menuPrincipal, TelaBuscarAcao telaBuscaAcao) {
-        this.menuPrincipal = menuPrincipal;
-        this.telaBuscaAcao = new TelaBuscarAcao(this); 
-		this.telaExcluirAcao = new TelaExcluirAcao();
+	private final Scanner scanner = new Scanner(System.in);
+    private final MediatorAcao mediatorAcao = MediatorAcao.getInstance();
+    private final TelaMenuPrincipal menuPrincipal;  
+
+    public TelaMenuAcao(TelaMenuPrincipal menuPrincipal) {
+        this.menuPrincipal = menuPrincipal;  
     }
-    
-    
-   public void menuAcao() {
+
+    public void menuAcao() {
         int opcaoAcao;
 
         do {
@@ -38,8 +32,8 @@ public class TelaMenuAcao {
             switch (opcaoAcao) {
                 case 1 -> incluirAcao();
                 case 2 -> alterarAcao();
-                case 3 -> telaExcluirAcao.excluirAcao();
-                case 4 -> telaBuscaAcao.buscarAcao();
+                case 3 -> excluirAcao();
+                case 4 -> buscarAcao();
                 case 0 -> menuPrincipal.exibirMenuPrincipal();
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -55,14 +49,7 @@ public class TelaMenuAcao {
             return;
         }
 
-        String erro;
-        try {
-            erro = mediatorAcao.incluir(acao);
-        } catch (Exception e) {
-            System.out.println("Erro ao incluir ação: " + e.getMessage());
-            return;
-        }
-
+        String erro = mediatorAcao.incluir(acao);
         if (erro == null) {
             System.out.println("Ação incluída com sucesso!");
         } else {
@@ -70,26 +57,17 @@ public class TelaMenuAcao {
         }
     }
 
-
     private void alterarAcao() {
         System.out.println("\nAlterar Ação");
         Acao acao = lerAcao();
-        String erro;
-		try {
-			erro = mediatorAcao.alterar(acao);
-		} catch (Exception e) {
-			System.out.println("Erro ao incluir ação: " + e.getMessage());
-            return;
-		}
+        String erro = mediatorAcao.alterar(acao);
         if (erro == null) {
             System.out.println("Ação alterada com sucesso!");
         } else {
-            System.out.println("Erro: Ação não encontrada.");
+            System.out.println(erro);
         }
     }
 
-    
-    
     private Acao lerAcao() {
         System.out.print("Identificador: ");
         int id = scanner.nextInt();
@@ -107,13 +85,32 @@ public class TelaMenuAcao {
 
         return new Acao(id, nome, dataValidade, valorUnitario);
     }
-
     
-    private void gerenciarOperacao() {
-        System.out.println("Gerenciamento de Operação ainda não implementado.");
-    }
+    private void excluirAcao() {
+        System.out.println("\nExcluir Ação");
+        System.out.print("Informe o identificador da ação: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
 
-    private void gerenciarTituloDivida() {
-        System.out.println("Gerenciamento de Título de Dívida ainda não implementado.");
+        String erro = mediatorAcao.excluir(id);
+        if (erro == null) {
+            System.out.println("Ação excluída com sucesso!");
+        } else {
+            System.out.println(erro);
+        }
+    }
+    
+    private void buscarAcao() {
+        System.out.println("\nBuscar Ação");
+        System.out.print("Informe o identificador da ação: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Acao acao = mediatorAcao.buscar(id);
+        if (acao != null) {
+            System.out.println("Ação encontrada: " + acao);
+        } else {
+            System.out.println("Erro: Ação não encontrada.");
+        }
     }
 }

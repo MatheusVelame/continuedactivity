@@ -58,7 +58,7 @@ import java.time.LocalDate;
 
 
 public class MediatorTituloDivida {
-    private RepositorioTituloDivida repositorioTituloDivida;
+    private RepositorioTituloDivida repositorioTituloDivida = new RepositorioTituloDivida();
 
     public MediatorTituloDivida() {
         
