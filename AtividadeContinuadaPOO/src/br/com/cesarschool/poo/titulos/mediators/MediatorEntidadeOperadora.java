@@ -60,11 +60,11 @@ public class MediatorEntidadeOperadora {
 
 	private RepositorioEntidadeOperadora repositorioEntidadeOperadora = new RepositorioEntidadeOperadora();
 	
-	public MediatorEntidadeOperadora() { // construto vazio para o singleton
+	private	 MediatorEntidadeOperadora() { // construto vazio para o singleton
 		
 	}
 	
-	public MediatorEntidadeOperadora getUnicaInstancia() {
+	public static MediatorEntidadeOperadora getUnicaInstancia() {
         if (unicaInstancia == null) {
         	unicaInstancia = new MediatorEntidadeOperadora();
         }

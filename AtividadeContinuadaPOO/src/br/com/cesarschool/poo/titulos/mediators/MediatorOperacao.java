@@ -110,16 +110,16 @@ import java.util.List;
 public class MediatorOperacao {
 
 	private static MediatorOperacao unicaInstancia;
-	private MediatorAcao mediatorAcao = new MediatorAcao();
-    private MediatorTituloDivida mediatorTituloDivida = new MediatorTituloDivida();
-    private MediatorEntidadeOperadora mediatorEntidadeOperadora = new MediatorEntidadeOperadora();
+	private MediatorAcao mediatorAcao = MediatorAcao.getInstance();
+    private MediatorTituloDivida mediatorTituloDivida = MediatorTituloDivida.getInstancia();
+    private MediatorEntidadeOperadora mediatorEntidadeOperadora = MediatorEntidadeOperadora.getUnicaInstancia();
     private RepositorioTransacao repositorioTransacao = new RepositorioTransacao();
     
     private MediatorOperacao() {
     	
     }
     
-    public MediatorOperacao getUnicaInstancia() {
+    public static MediatorOperacao getUnicaInstancia() {
     	if (unicaInstancia == null) {
     		unicaInstancia = new MediatorOperacao();
     	}

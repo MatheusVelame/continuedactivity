@@ -58,10 +58,18 @@ import java.time.LocalDate;
 
 
 public class MediatorTituloDivida {
+	private static MediatorTituloDivida instance;
     private RepositorioTituloDivida repositorioTituloDivida = new RepositorioTituloDivida();
 
-    public MediatorTituloDivida() {
+    private MediatorTituloDivida() {
         
+    }
+    
+    public static MediatorTituloDivida getInstancia() {
+    	if (instance == null) {
+    		instance = new MediatorTituloDivida();
+    	}
+    	return instance;
     }
 
     private String validar(TituloDivida titulo) {
