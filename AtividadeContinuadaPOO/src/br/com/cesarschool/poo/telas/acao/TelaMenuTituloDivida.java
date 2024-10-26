@@ -1,159 +1,150 @@
 package br.com.cesarschool.poo.telas.acao;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.time.format.DateTimeParseException;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
-
 import br.com.cesarschool.poo.titulos.mediators.MediatorTituloDivida;
 
-
-public class TelaMenuTituloDivida {
-	private final Scanner scanner = new Scanner(System.in);
-    private final MediatorTituloDivida mediatorTitulo = MediatorTituloDivida.getInstancia();
+public class TelaMenuTituloDivida extends JFrame {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final MediatorTituloDivida mediatorTitulo = MediatorTituloDivida.getInstancia();
     private final TelaMenuPrincipal menuPrincipal;
 
-    
     public TelaMenuTituloDivida(TelaMenuPrincipal menuPrincipal) {
         this.menuPrincipal = menuPrincipal;
+        inicializarComponentes();
     }
-    
-    
-    
-   public void menuTitulo() throws IOException{
-    int opcaoTitulo;
 
-    do {
-        System.out.println("\nGerenciar Titulo:");
-        System.out.println("1. Incluir titulo");
-        System.out.println("2. Alterar titulo");
-        System.out.println("3. Excluir titulo");
-        System.out.println("4. Buscar titulo");
-        System.out.println("0. Voltar ao Menu Principal");
-        System.out.print("Escolha uma opção: ");
-        opcaoTitulo = scanner.nextInt();
-        scanner.nextLine();
+    private void inicializarComponentes() {
+        setTitle("Gerenciar Título de Dívida");
+        setSize(400, 300);
+        setLocationRelativeTo(null); 
 
-        switch (opcaoTitulo) {
-            case 1 -> incluirTitulo();
-            case 2 -> alterarTitulo();
-            case 3 -> excluirTitulo();
-            case 4 -> buscarTitulo();
-            case 0 -> menuPrincipal.exibirMenuPrincipal();
-            default -> System.out.println("Opção inválida. Tente novamente.");
+        
+        JButton btnIncluir = new JButton("Incluir Título");
+        JButton btnAlterar = new JButton("Alterar Título");
+        JButton btnExcluir = new JButton("Excluir Título");
+        JButton btnBuscar = new JButton("Buscar Título");
+        JButton btnVoltar = new JButton("Voltar");
+
+        
+        btnIncluir.addActionListener(e -> {
+			try {
+				incluirTitulo();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
+        btnAlterar.addActionListener(e -> {
+			try {
+				alterarTitulo();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
+        btnExcluir.addActionListener(e -> {
+			try {
+				excluirTitulo();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
+        btnBuscar.addActionListener(e -> {
+			try {
+				buscarTitulo();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
+        btnVoltar.addActionListener(e -> voltarMenuPrincipal());
+
+       
+        JPanel painel = new JPanel(new GridLayout(5, 1, 10, 10));
+        painel.add(btnIncluir);
+        painel.add(btnAlterar);
+        painel.add(btnExcluir);
+        painel.add(btnBuscar);
+        painel.add(btnVoltar);
+
+        add(painel, BorderLayout.CENTER);
+    }
+
+    private TituloDivida lerTitulo() {
+        try {
+            int id = Integer.parseInt(JOptionPane.showInputDialog(this, "Informe o Identificador:"));
+            String nome = JOptionPane.showInputDialog(this, "Informe o Nome:");
+            LocalDate dataValidade = LocalDate.parse(JOptionPane.showInputDialog(this, "Informe a Data de Validade (YYYY-MM-DD):"));
+            double taxaJuros = Double.parseDouble(JOptionPane.showInputDialog(this, "Informe a Taxa de Juros:"));
+
+            return new TituloDivida(id, nome, dataValidade, taxaJuros);
+        } catch (NumberFormatException | DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Erro: Dados inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
         }
-    } while (opcaoTitulo != 0);
-}
-
-
-private TituloDivida lerTitulo() {
-    System.out.print("Identificador: ");
-    int id = scanner.nextInt();
-    scanner.nextLine();
-
-    System.out.print("Nome: ");
-    String nome = scanner.nextLine();
-
-    System.out.print("Data de Validade (YYYY-MM-DD): ");
-    LocalDate dataValidade = LocalDate.parse(scanner.nextLine());
-
-    System.out.print("Taxa de juros: ");
-    double taxaJuros = scanner.nextDouble();
-    scanner.nextLine();
-
-    return new TituloDivida(id, nome, dataValidade, taxaJuros);
-}
-
-
-private void incluirTitulo() {
-	System.out.println("\nIncluir titulo");
-    
-    TituloDivida titulo = lerTitulo();
-    if (titulo == null) {
-        System.out.println("Erro: Não foi possível ler os dados do titulo.");
-        return;
     }
 
-    String erro;
-    try {
-        erro = mediatorTitulo.incluir(titulo);
-    } catch (Exception e) {
-        System.out.println("Erro ao incluir titulo: " + e.getMessage());
-        return;
+    private void incluirTitulo() throws Exception {
+        TituloDivida titulo = lerTitulo();
+        if (titulo != null) {
+            String erro = mediatorTitulo.incluir(titulo);
+            if (erro == null) {
+                JOptionPane.showMessageDialog(this, "Título incluído com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, erro, "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
-    if (erro == null) {
-        System.out.println("titulo incluído com sucesso!");
-    } else {
-        System.out.println(erro);
-    }    
+    private void alterarTitulo() throws Exception {
+        TituloDivida titulo = lerTitulo();
+        if (titulo != null) {
+            String erro = mediatorTitulo.alterar(titulo);
+            if (erro == null) {
+                JOptionPane.showMessageDialog(this, "Título alterado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, erro, "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void excluirTitulo() throws Exception {
+        try {
+            int id = Integer.parseInt(JOptionPane.showInputDialog(this, "Informe o Identificador do Título:"));
+            String erro = mediatorTitulo.excluir(id);
+            if (erro == null) {
+                JOptionPane.showMessageDialog(this, "Título excluído com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, erro, "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Erro: Identificador inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void buscarTitulo() throws Exception {
+        try {
+            int id = Integer.parseInt(JOptionPane.showInputDialog(this, "Informe o Identificador do Título:"));
+            TituloDivida titulo = mediatorTitulo.buscar(id);
+            if (titulo != null) {
+                JOptionPane.showMessageDialog(this, "Título encontrado: " + titulo);
+            } else {
+                JOptionPane.showMessageDialog(this, "Título não encontrado!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Erro: Identificador inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void voltarMenuPrincipal() {
+        setVisible(false);  
+        menuPrincipal.setVisible(true);  
+    }
 }
-
-	private TituloDivida alterarTitulo() {
-	    System.out.println("\nAlterar titulo");
-	    try {
-	        TituloDivida titulo = lerTitulo();
-	        String erro = mediatorTitulo.alterar(titulo);
-	        if (erro == null) {
-	            System.out.println("titulo alterado com sucesso!");
-	        } else {
-	            System.out.println(erro);
-	        }
-	    } catch (Exception e) {
-	        System.out.println("Erro ao alterar o titulo: " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	    return null;
-	}
-	
-	private void excluirTitulo() {
-	    try {
-	        System.out.println("\nExcluir titulo");
-	        System.out.print("Informe o identificador do titulo: ");
-	        int id = scanner.nextInt();
-	        scanner.nextLine();
-	        
-	        String erro = mediatorTitulo.excluir(id);
-	        if (erro == null) {
-	            System.out.println("titulo excluído com sucesso!");
-	        } else {
-	            System.out.println(erro);
-	        }
-	    } catch (InputMismatchException e) {
-	        System.out.println("Erro: Identificador inválido. Por favor, insira um número.");
-	        scanner.nextLine(); 
-	    } catch (Exception e) {
-	        System.out.println("Erro inesperado: " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	}
-
-	private void buscarTitulo() {
-	    try {
-	        System.out.println("\nBuscar titulo");
-	        System.out.print("Informe o identificador do titulo: ");
-	        
-	        int id = scanner.nextInt();
-	        scanner.nextLine();  
-
-	        TituloDivida titulo = mediatorTitulo.buscar(id);
-
-	        if (titulo != null) {
-	            System.out.println("titulo encontrado: " + titulo);
-	        } else {
-	            System.out.println("Erro: titulo não encontrada.");
-	        }
-	    } catch (InputMismatchException e) {
-	        System.out.println("Erro: Identificador inválido. Insira um número.");
-	        scanner.nextLine(); 
-	    } catch (Exception e) {
-	        System.out.println("Erro inesperado: " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	}
-
-	
-}
-
-    

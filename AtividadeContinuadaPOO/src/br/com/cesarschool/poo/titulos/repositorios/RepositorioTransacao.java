@@ -88,8 +88,8 @@ public class RepositorioTransacao {
 	                    tituloDivida = new TituloDivida(Integer.parseInt(objetosLinha[14].trim()), objetosLinha[15].trim(), LocalDate.parse(objetosLinha[16].trim()), Double.parseDouble(objetosLinha[17].trim()));
 	                }
 	                
-	                double valorOperacao = Double.parseDouble(objetosLinha[18].trim());
-	                LocalDateTime dataHoraOperacao = LocalDateTime.parse(objetosLinha[19].trim());
+	                double valorOperacao = Double.parseDouble(objetosLinha[15].trim());
+	                LocalDateTime dataHoraOperacao = LocalDateTime.parse(objetosLinha[16].trim());
 	                
 	                Transacao transacao = new Transacao(objetosCredito, objetosDebito, acao, tituloDivida, valorOperacao, dataHoraOperacao);
 	                transacoesEncontradas.add(transacao);
