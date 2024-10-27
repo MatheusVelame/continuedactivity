@@ -34,5 +34,13 @@ public class TituloDivida extends Ativo {
 	public double calcularPrecoTransacao(double montante) {
 		return montante * (1 - taxaJuros/100.0);
 	}
+	
+	 @Override
+	    public String toString() {
+	        return String.format(
+	            "Ação [ID: %d, Nome: %s, Data de Validade: %s, Valor Unitário: %.2f]",
+	            getIdentificador(), getNome(), getDataDeValidade(), taxaJuros
+	        );
+	    }
 
 }
