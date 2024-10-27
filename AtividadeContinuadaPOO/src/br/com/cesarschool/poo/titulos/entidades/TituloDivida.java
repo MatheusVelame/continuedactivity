@@ -38,7 +38,7 @@ public class TituloDivida extends Ativo {
 	 @Override
 	    public String toString() {
 	        return String.format(
-	            "Ação [ID: %d, Nome: %s, Data de Validade: %s, Valor Unitário: %.2f]",
+	            "Ação [ID: %d, Nome: %s, Data de Validade: %s, Taxa de Juros: %.2f]",
 	            getIdentificador(), getNome(), getDataDeValidade(), taxaJuros
 	        );
 	    }
