@@ -2,9 +2,6 @@ package br.com.cesarschool.poo.telas.acao;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;

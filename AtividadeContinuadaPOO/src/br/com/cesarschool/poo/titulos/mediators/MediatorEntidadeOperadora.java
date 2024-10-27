@@ -87,15 +87,16 @@ public class MediatorEntidadeOperadora {
 	
 	public String incluir(EntidadeOperadora entidade) {
 		String validando = validar (entidade);
-		boolean incluindo = repositorioEntidadeOperadora.incluir(entidade);
 		
-		if ((validando == null) && (incluindo == true)) {
-			return null;
-		} else if ((validando == null) && (incluindo == false)) {
-			return "Entidade já existente";
-		} else{
-			return validando;
-		}
+		if (validando == null) {
+            if (repositorioEntidadeOperadora.incluir(entidade)) {
+                return null;
+            } else {
+                return "Entidade já existente.";
+            }
+        } else {
+            return validando;
+        }
 	}
 	
 	public String alterar(EntidadeOperadora entidade) {

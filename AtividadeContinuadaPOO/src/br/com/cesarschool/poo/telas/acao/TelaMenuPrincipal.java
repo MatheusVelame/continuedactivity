@@ -20,12 +20,14 @@ public class TelaMenuPrincipal extends JFrame {
         JButton btnTituloDivida = new JButton("Gerenciar Títulos de Dívida");
         JButton btnAcao = new JButton("Gerenciar Ações");
         JButton btnOperacao = new JButton("Gerenciar Operações");
+        JButton btnEntidadeOperadora = new JButton("Gerenciar Entidade Operadora");
         JButton btnSair = new JButton("Sair");
 
         
         btnTituloDivida.addActionListener(e -> abrirMenuTituloDivida());
         btnAcao.addActionListener(e -> abrirMenuAcao());
         btnOperacao.addActionListener(e -> abrirMenuOperacao()); 
+        btnEntidadeOperadora.addActionListener(e -> abrirMenuEntidadeOperadora());
         btnSair.addActionListener(e -> System.exit(0));
 
         
@@ -33,6 +35,7 @@ public class TelaMenuPrincipal extends JFrame {
         painel.add(btnTituloDivida);
         painel.add(btnAcao);
         painel.add(btnOperacao); 
+        painel.add(btnEntidadeOperadora);
         painel.add(btnSair);
 
         add(painel, BorderLayout.CENTER);
@@ -47,10 +50,15 @@ public class TelaMenuPrincipal extends JFrame {
         new TelaMenuAcao(this).setVisible(true);
         this.dispose();
     }
-
+    
     private void abrirMenuOperacao() {
         new TelaOperacao(this).setVisible(true); 
         this.dispose();
+    }
+    
+    private void abrirMenuEntidadeOperadora() {
+    	new TelaMenuEntidadeOperadora(this).setVisible(true);
+    	this.dispose();
     }
 
     public static void main(String[] args) {
