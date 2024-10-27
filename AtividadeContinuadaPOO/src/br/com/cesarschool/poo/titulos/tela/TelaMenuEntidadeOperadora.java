@@ -1,4 +1,4 @@
-package br.com.cesarschool.poo.telas.acao;
+package br.com.cesarschool.poo.titulos.tela;
 
 import javax.swing.*;
 import java.awt.*;

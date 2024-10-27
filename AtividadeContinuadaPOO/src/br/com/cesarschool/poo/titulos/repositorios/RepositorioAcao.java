@@ -38,59 +38,65 @@ public class RepositorioAcao {
 
     private static final String ARQUIVO_ACOES = "Acao.txt";
 
-    public boolean incluir(Acao acao) {
-        String objetoAcao = acao.getIdentificador() + ";" + acao.getNome() + ";" +
-                            acao.getDataDeValidade() + ";" + acao.getValorUnitario();
-        boolean identificadorNaoEncontrado = true;
-
-        
+    // Método auxiliar para garantir que o arquivo existe
+    private void garantirArquivo() {
         File file = new File(ARQUIVO_ACOES);
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                System.out.println("Arquivo criado.");
+                System.out.println("Arquivo Acao.txt criado.");
             } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+                System.err.println("Erro ao criar o arquivo: " + e.getMessage());
             }
         }
+    }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+    public boolean incluir(Acao acao) {
+        garantirArquivo();
+
+        String objetoAcao = acao.getIdentificador() + ";" + acao.getNome() + ";" +
+                            acao.getDataDeValidade() + ";" + acao.getValorUnitario();
+        boolean identificadorJaExiste = false;
+
+        // Verifica se o identificador já existe no arquivo
+        try (BufferedReader reader = new BufferedReader(new FileReader(ARQUIVO_ACOES))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 if (linha.startsWith(acao.getIdentificador() + ";")) {
-                    identificadorNaoEncontrado = false;
+                    identificadorJaExiste = true;
                     break;
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao verificar duplicidade no arquivo: " + e.getMessage());
             return false;
         }
 
-        if (identificadorNaoEncontrado) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+        if (!identificadorJaExiste) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_ACOES, true))) {
                 writer.write(objetoAcao);
                 writer.newLine();
-                writer.flush(); 
                 System.out.println("Ação gravada: " + objetoAcao);
+                return true;
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Erro ao incluir ação no arquivo: " + e.getMessage());
                 return false;
             }
-            return true;
+        } else {
+            System.out.println("Ação com identificador já existente.");
+            return false;
         }
-        System.out.println("Ação com identificador já existente.");
-        return false;
     }
 
-
     public boolean alterar(Acao acao) {
+        garantirArquivo();
+
         String novoObjetoAcao = acao.getIdentificador() + ";" + acao.getNome() + ";" +
                                 acao.getDataDeValidade() + ";" + acao.getValorUnitario();
         boolean identificadorEncontrado = false;
         StringBuilder conteudoArquivo = new StringBuilder();
 
+        // Lê o arquivo e modifica a linha desejada
         try (BufferedReader reader = new BufferedReader(new FileReader(ARQUIVO_ACOES))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
@@ -102,26 +108,29 @@ public class RepositorioAcao {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao ler o arquivo para alteração: " + e.getMessage());
             return false;
         }
 
         if (identificadorEncontrado) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_ACOES))) {
                 writer.write(conteudoArquivo.toString());
+                return true;
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Erro ao salvar alterações no arquivo: " + e.getMessage());
                 return false;
             }
-            return true;
         }
         return false;
     }
 
     public boolean excluir(int identificador) {
+        garantirArquivo();
+
         boolean identificadorEncontrado = false;
         StringBuilder conteudoArquivo = new StringBuilder();
 
+        // Lê o arquivo e remove a linha com o identificador especificado
         try (BufferedReader reader = new BufferedReader(new FileReader(ARQUIVO_ACOES))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
@@ -132,24 +141,24 @@ public class RepositorioAcao {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Erro ao ler o arquivo para exclusão: " + e.getMessage());
             return false;
         }
 
         if (identificadorEncontrado) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO_ACOES))) {
                 writer.write(conteudoArquivo.toString());
+                return true;
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Erro ao salvar exclusão no arquivo: " + e.getMessage());
                 return false;
             }
-            return true;
         }
         return false;
     }
 
     public Acao buscar(int identificador) {
-        Acao acao = null;
+        garantirArquivo();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(ARQUIVO_ACOES))) {
             String linha;
@@ -157,7 +166,7 @@ public class RepositorioAcao {
                 if (linha.startsWith(identificador + ";")) {
                     String[] partes = linha.split(";");
                     if (partes.length == 4) {
-                        acao = new Acao(
+                        return new Acao(
                             identificador,
                             partes[1],
                             LocalDate.parse(partes[2]),
@@ -166,7 +175,7 @@ public class RepositorioAcao {
                     } else {
                         System.err.println("Erro: Linha com identificador " + identificador + " não contém 4 partes.");
                     }
-                    break; 
+                    break;
                 }
             }
         } catch (IOException e) {
@@ -175,6 +184,6 @@ public class RepositorioAcao {
             System.err.println("Erro ao converter valor para double: " + e.getMessage());
         }
 
-        return acao;
+        return null;
     }
 }

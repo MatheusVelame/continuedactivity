@@ -4,6 +4,7 @@ import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
@@ -37,28 +38,42 @@ import java.util.List;
 
 public class RepositorioTituloDivida {
 
-	public boolean incluir(TituloDivida titulo) throws Exception {
-		
-		try {
-			List<String> linhas = Files.readAllLines(Paths.get("TituloDivida.txt"));
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
+    private static final String ARQUIVO_TITULOS = "TituloDivida.txt";
+    
+    public boolean incluir(TituloDivida titulo) throws Exception {
+        Path caminhoArquivo = Paths.get(ARQUIVO_TITULOS);
 
-				if (id == titulo.getIdentificador()) {
-					return false;
-				}
-			}
+        if (Files.notExists(caminhoArquivo)) {
+            try {
+                Files.createFile(caminhoArquivo);
+                System.out.println("Arquivo TituloDivida.txt criado.");
+            } catch (IOException e) {
+                throw new Exception("Erro ao criar o arquivo TituloDivida.txt: " + e.getMessage(), e);
+            }
+        }
 
-			String novaLinha = titulo.getIdentificador() + ";" + titulo.getNome() + ";" +
-					titulo.getDataDeValidade() + ";" + titulo.getTaxaJuros();
-			Files.write(Paths.get("TituloDivida.txt"), Collections.singletonList(novaLinha), StandardOpenOption.APPEND);
-			return true;
+        try {
+            List<String> linhas = Files.readAllLines(caminhoArquivo);
+            for (String linha : linhas) {
+                String[] partes = linha.split(";");
+                int id = Integer.parseInt(partes[0]);
 
-		} catch (IOException e) {
-			throw new Exception("Erro ao incluir título no arquivo: " + e.getMessage(), e);
-		}
-	}
+                if (id == titulo.getIdentificador()) {
+                    System.err.println("Identificador duplicado: " + id);
+                    return false;
+                }
+            }
+
+            String novaLinha = titulo.getIdentificador() + ";" + titulo.getNome() + ";" +
+                    titulo.getDataDeValidade() + ";" + titulo.getTaxaJuros();
+            Files.write(caminhoArquivo, Collections.singletonList(novaLinha), StandardOpenOption.APPEND);
+            System.out.println("Título incluído com sucesso: " + novaLinha);
+            return true;
+
+        } catch (IOException e) {
+            throw new Exception("Erro ao incluir título no arquivo: " + e.getMessage(), e);
+        }
+    }
 
 	public boolean alterar(TituloDivida titulo) throws Exception {
 		try {
