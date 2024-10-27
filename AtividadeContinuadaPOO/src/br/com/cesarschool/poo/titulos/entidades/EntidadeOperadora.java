@@ -80,4 +80,12 @@ public class EntidadeOperadora {
 		saldoTituloDivida = saldoTituloDivida - valor;
 	}
 	
+	@Override
+    public String toString() {
+        return String.format(
+            "Ação [ID: %d, Nome: %s, Autorização de Ação: %s, Saldo de Ação: %.2f, Saldo de título dívida: %.2f]",
+            getIdentificador(), getNome(), getAutorizadoAcao(), getSaldoAcao(), getSaldoTituloDivida()
+        );
+    }
+	
 }
