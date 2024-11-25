@@ -32,11 +32,11 @@ public class EntidadeOperadora extends Entidade {
 	private double saldoAcao;
 	private double saldoTituloDivida;
 	
-	public EntidadeOperadora(long identificador, String nome, boolean autorizadoAcao) {
-		this.identificador = identificador;
-		this.nome = nome;
-		this.autorizadoAcao = autorizadoAcao;
-	}
+	public EntidadeOperadora(long identificador, String nome, double autorizadoAcao) {
+        super();
+        this.identificador = identificador;
+        this.nome = nome;
+    }
 	
 	@Override
 	public String getIdUnico() {

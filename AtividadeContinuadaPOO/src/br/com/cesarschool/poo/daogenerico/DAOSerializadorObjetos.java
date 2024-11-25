@@ -49,7 +49,7 @@ public class DAOSerializadorObjetos {
 	            oos.writeObject(entidade); // Grava a entidade
 	            return true;
 	        } catch (IOException e) {
-	            return false; // Falha silenciosa
+	            return false;
 	        }
 	    }
 	    return false;
@@ -67,13 +67,13 @@ public class DAOSerializadorObjetos {
 	        return false;
 	    }
 
-	    // Atualizar a entidade e sobrescrever o arquivo
+
 	    entidade.setDataHoraUltimaAlteracao(LocalDateTime.now());
 	    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
 	        oos.writeObject(entidade); // Grava a entidade atualizada
 	        return true;
 	    } catch (IOException e) {
-	        return false; // Falha silenciosa
+	        return false;
 	    }
 	}
 
@@ -117,7 +117,7 @@ public class DAOSerializadorObjetos {
 	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
 	        Object objeto = ois.readObject();
 	        if (objeto instanceof Entidade) {
-	            return (Entidade) objeto; // Retorna a entidade válida
+	            return (Entidade) objeto;
 	        }
 	    } catch (IOException | ClassNotFoundException e) {
 	    	e.printStackTrace();
