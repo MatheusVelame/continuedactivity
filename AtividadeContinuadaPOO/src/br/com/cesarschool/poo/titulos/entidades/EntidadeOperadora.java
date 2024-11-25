@@ -1,5 +1,7 @@
 package br.com.cesarschool.poo.titulos.entidades;
 
+import br.com.cesarschool.poo.daogenerico.Entidade;
+
 /*
  * Esta classe deve ter os seguintes atributos:
  * identificador, do tipo long
@@ -22,7 +24,7 @@ package br.com.cesarschool.poo.titulos.entidades;
  *  void debitarSaldoTituloDivida(double valor): deve diminuir valor de saldoTituloDivida  
  */
 
-public class EntidadeOperadora {
+public class EntidadeOperadora extends Entidade {
 	
 	private long identificador;
 	private String nome;
@@ -34,6 +36,11 @@ public class EntidadeOperadora {
 		this.identificador = identificador;
 		this.nome = nome;
 		this.autorizadoAcao = autorizadoAcao;
+	}
+	
+	@Override
+	public String getIdUnico() {
+		return String.valueOf(identificador);
 	}
 	
 	public long getIdentificador() {
