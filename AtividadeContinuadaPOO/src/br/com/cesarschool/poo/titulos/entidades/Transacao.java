@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import br.com.cesarschool.poo.daogenerico.Entidade;
+import br.com.cesarschool.poo.titulos.utils.Comparavel;
 
 /*
  * Esta classe deve ter os seguintes atributos:
@@ -21,7 +22,7 @@ import br.com.cesarschool.poo.daogenerico.Entidade;
  *  
  */ 
 
-public class Transacao extends Entidade{
+public class Transacao extends Entidade implements Comparavel {
 	
 	private EntidadeOperadora entidadeCredito;
 	private EntidadeOperadora  entidadeDebito;
@@ -72,6 +73,19 @@ public class Transacao extends Entidade{
 	
 	public LocalDateTime getDataHoraOperacao() {
 		return dataHoraOperacao;
+	}
+	
+	@Override
+	public int comparar(Comparavel c) {
+		
+		if (dataHoraOperacao.isBefore(((Transacao) c).getDataHoraOperacao())) {
+			return 1;
+		} else if (dataHoraOperacao.isAfter(((Transacao) c).getDataHoraOperacao())){
+			return -1;
+		} else {
+			return 0;
+		}
+		
 	}
 	
 }

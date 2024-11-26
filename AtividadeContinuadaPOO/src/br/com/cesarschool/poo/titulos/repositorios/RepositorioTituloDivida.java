@@ -1,16 +1,7 @@
 package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado TituloDivida.txt os dados dos objetos do tipo
@@ -36,123 +27,37 @@ import java.util.List;
  * objeto. Caso o identificador n�o seja encontrado no arquivo, retornar null.   
  */
 
-public class RepositorioTituloDivida {
+public class RepositorioTituloDivida extends RepositorioGeral{
+	
+	public RepositorioTituloDivida() {
+	}
 
-    private static final String ARQUIVO_TITULOS = "TituloDivida.txt";
-    
-    public boolean incluir(TituloDivida titulo) throws Exception {
-        Path caminhoArquivo = Paths.get(ARQUIVO_TITULOS);
+    public boolean incluir(TituloDivida tituloDivida) {
+    	DAOSerializadorObjetos dao = getDao();
 
-        if (Files.notExists(caminhoArquivo)) {
-            try {
-                Files.createFile(caminhoArquivo);
-                System.out.println("Arquivo TituloDivida.txt criado.");
-            } catch (IOException e) {
-                throw new Exception("Erro ao criar o arquivo TituloDivida.txt: " + e.getMessage(), e);
-            }
-        }
-
-        try {
-            List<String> linhas = Files.readAllLines(caminhoArquivo);
-            for (String linha : linhas) {
-                String[] partes = linha.split(";");
-                int id = Integer.parseInt(partes[0]);
-
-                if (id == titulo.getIdentificador()) {
-                    System.err.println("Identificador duplicado: " + id);
-                    return false;
-                }
-            }
-
-            String novaLinha = titulo.getIdentificador() + ";" + titulo.getNome() + ";" +
-                    titulo.getDataDeValidade() + ";" + titulo.getTaxaJuros();
-            Files.write(caminhoArquivo, Collections.singletonList(novaLinha), StandardOpenOption.APPEND);
-            System.out.println("Título incluído com sucesso: " + novaLinha);
-            return true;
-
-        } catch (IOException e) {
-            throw new Exception("Erro ao incluir título no arquivo: " + e.getMessage(), e);
-        }
+        return dao.incluir(tituloDivida);
     }
 
-	public boolean alterar(TituloDivida titulo) throws Exception {
-		try {
-			List<String> linhas = Files.readAllLines(Paths.get("TituloDivida.txt"));
-			boolean encontrado = false;
-			List<String> novasLinhas = new ArrayList<>();
+    public boolean alterar(TituloDivida tituloDivida) {
+    	DAOSerializadorObjetos dao = getDao();
 
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
+        return dao.alterar(tituloDivida);
+    }
 
-				if (id == titulo.getIdentificador()) {
-					linha = titulo.getIdentificador() + ";" + titulo.getNome() + ";" +
-							titulo.getDataDeValidade() + ";" + titulo.getTaxaJuros();
-					encontrado = true;
-				}
+    public boolean excluir(int identificador) {
+    	DAOSerializadorObjetos dao = getDao();
 
-				novasLinhas.add(linha);
-			}
+        return dao.excluir(String.valueOf(identificador));
+    }
 
-			if (encontrado) {
-				Files.write(Paths.get("TituloDivida.txt"), novasLinhas);
-				return true;
-			}
-			return false;
+    public TituloDivida buscar(int identificador) {
+    	DAOSerializadorObjetos dao = getDao();
 
-		} catch (IOException e) {
-			throw new Exception("Erro ao alterar título no arquivo: " + e.getMessage(), e);
-		}
-	}
-
-	public boolean excluir(int identificador) throws Exception {
-		try {
-			List<String> linhas = Files.readAllLines(Paths.get("TituloDivida.txt"));
-			boolean encontrado = false;
-			List<String> novasLinhas = new ArrayList<>();
-
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
-
-				if (id != identificador) {
-					novasLinhas.add(linha);
-				} else {
-					encontrado = true;
-				}
-			}
-
-			if (encontrado) {
-				Files.write(Paths.get("TituloDivida.txt"), novasLinhas);
-				return true;
-			}
-			return false;
-
-		} catch (IOException e) {
-			throw new Exception("Erro ao excluir título no arquivo: " + e.getMessage(), e);
-		}
-	}
-
-	public TituloDivida buscar(int identificador) throws Exception {
-		try {
-			List<String> linhas = Files.readAllLines(Paths.get("TituloDivida.txt"));
-
-			for (String linha : linhas) {
-				String[] partes = linha.split(";");
-				int id = Integer.parseInt(partes[0]);
-
-				if (id == identificador) {
-					String nome = partes[1];
-					LocalDate dataValidade = LocalDate.parse(partes[2]);
-					double taxaJuros = Double.parseDouble(partes[3]);
-					return new TituloDivida(id, nome, dataValidade, taxaJuros);
-				}
-			}
-
-			return null;
-
-		} catch (IOException e) {
-			throw new Exception("Erro ao buscar título no arquivo: " + e.getMessage(), e);
-		}
+        return (TituloDivida)dao.buscar(String.valueOf(identificador));
+    }
+    
+	@Override
+	public Class<?> getClasseEntidade() {
+		return TituloDivida.class;
 	}
 }

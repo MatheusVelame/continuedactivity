@@ -31,8 +31,6 @@ public class Ativo extends Entidade{
 		return String.valueOf(identificador);
 	}
 	
-	
-	
 	public int getIdentificador() {
 		return identificador;
 	}
