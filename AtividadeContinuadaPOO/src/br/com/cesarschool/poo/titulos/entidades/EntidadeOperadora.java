@@ -1,4 +1,4 @@
-package br.gov.cesarschool.poo.titulos.entidades;
+package br.com.cesarschool.poo.titulos.entidades;
 
 import br.gov.cesarschool.poo.daogenerico.Entidade;
 

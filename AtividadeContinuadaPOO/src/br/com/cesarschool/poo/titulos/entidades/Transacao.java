@@ -1,10 +1,10 @@
-package br.gov.cesarschool.poo.titulos.entidades;
+package br.com.cesarschool.poo.titulos.entidades;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import br.com.cesarschool.poo.titulos.utils.Comparavel;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
-import br.gov.cesarschool.poo.titulos.utils.Comparavel;
 
 /*
  * Esta classe deve ter os seguintes atributos:

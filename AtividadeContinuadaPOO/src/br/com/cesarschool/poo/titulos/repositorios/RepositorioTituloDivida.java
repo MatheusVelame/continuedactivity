@@ -1,7 +1,7 @@
-package br.gov.cesarschool.poo.titulos.repositorios;
+package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
-import br.gov.cesarschool.poo.titulos.entidades.TituloDivida;
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado TituloDivida.txt os dados dos objetos do tipo

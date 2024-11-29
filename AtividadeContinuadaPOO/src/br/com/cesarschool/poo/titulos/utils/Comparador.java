@@ -1,4 +1,4 @@
-package br.gov.cesarschool.poo.titulos.utils;
+package br.com.cesarschool.poo.titulos.utils;
 
 public interface Comparador {
 

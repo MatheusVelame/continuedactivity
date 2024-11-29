@@ -1,6 +1,6 @@
-package br.gov.cesarschool.poo.titulos.utils;
+package br.com.cesarschool.poo.titulos.utils;
 
-import br.gov.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
 
 /*
  * Herda de ComparadorPadrao. Deve implementar

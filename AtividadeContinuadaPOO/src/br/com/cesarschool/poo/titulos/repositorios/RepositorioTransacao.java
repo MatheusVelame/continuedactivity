@@ -1,8 +1,8 @@
-package br.gov.cesarschool.poo.titulos.repositorios;
+package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
-import br.gov.cesarschool.poo.titulos.entidades.Transacao;
 
 import java.util.ArrayList;
 

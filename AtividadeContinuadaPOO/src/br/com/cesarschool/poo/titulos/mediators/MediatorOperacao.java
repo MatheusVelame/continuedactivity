@@ -1,10 +1,10 @@
-package br.gov.cesarschool.poo.titulos.mediators;
+package br.com.cesarschool.poo.titulos.mediators;
 
-import br.gov.cesarschool.poo.titulos.entidades.Acao;
-import br.gov.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.gov.cesarschool.poo.titulos.entidades.TituloDivida;
-import br.gov.cesarschool.poo.titulos.entidades.Transacao;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

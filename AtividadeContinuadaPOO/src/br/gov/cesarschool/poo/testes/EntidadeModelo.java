@@ -1,7 +1,7 @@
 package br.gov.cesarschool.poo.testes;
 
+import br.com.cesarschool.poo.titulos.utils.Comparavel;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
-import br.gov.cesarschool.poo.titulos.utils.Comparavel;
 
 class EntidadeModelo extends Entidade implements Comparavel {
 	private int id; 

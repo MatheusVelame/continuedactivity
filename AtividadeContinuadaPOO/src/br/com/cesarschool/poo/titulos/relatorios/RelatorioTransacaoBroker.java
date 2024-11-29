@@ -1,12 +1,12 @@
-package br.gov.cesarschool.poo.titulos.relatorios;
+package br.com.cesarschool.poo.titulos.relatorios;
 
 import java.util.ArrayList;
 
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.utils.ComparadorTransacaoPorNomeCredora;
+import br.com.cesarschool.poo.titulos.utils.Ordenador;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
-import br.gov.cesarschool.poo.titulos.entidades.Transacao;
-import br.gov.cesarschool.poo.titulos.utils.ComparadorTransacaoPorNomeCredora;
-import br.gov.cesarschool.poo.titulos.utils.Ordenador;
 
 public class RelatorioTransacaoBroker {
 

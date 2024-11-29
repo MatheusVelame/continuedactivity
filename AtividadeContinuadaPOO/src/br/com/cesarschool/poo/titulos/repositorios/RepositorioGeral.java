@@ -1,4 +1,4 @@
-package br.gov.cesarschool.poo.titulos.repositorios;
+package br.com.cesarschool.poo.titulos.repositorios;
 
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
 

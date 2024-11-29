@@ -1,7 +1,7 @@
-package br.gov.cesarschool.poo.titulos.mediators;
+package br.com.cesarschool.poo.titulos.mediators;
 
-import br.gov.cesarschool.poo.titulos.entidades.TituloDivida;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
 
 import java.time.LocalDate;
 /*

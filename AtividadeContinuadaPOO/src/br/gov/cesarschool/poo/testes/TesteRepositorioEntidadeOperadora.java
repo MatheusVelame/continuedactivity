@@ -4,10 +4,10 @@ import java.io.File;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioGeral;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
-import br.gov.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioGeral;
 
 public class TesteRepositorioEntidadeOperadora extends TesteGeral {
 	private static final RepositorioEntidadeOperadora DAO = new RepositorioEntidadeOperadora();

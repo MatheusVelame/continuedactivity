@@ -1,7 +1,7 @@
-package br.gov.cesarschool.poo.titulos.mediators;
+package br.com.cesarschool.poo.titulos.mediators;
 
-import br.gov.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
 /*
  *
  * Deve ser um singleton.

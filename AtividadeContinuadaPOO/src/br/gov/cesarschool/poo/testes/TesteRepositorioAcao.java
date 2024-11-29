@@ -6,10 +6,10 @@ import java.time.LocalDate;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioGeral;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
-import br.gov.cesarschool.poo.titulos.entidades.Acao;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioAcao;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioGeral;
 
 public class TesteRepositorioAcao extends TesteGeral {
 	private static final RepositorioAcao DAO = new RepositorioAcao();

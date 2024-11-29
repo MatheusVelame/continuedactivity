@@ -6,16 +6,16 @@ import java.lang.reflect.Method;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+import br.com.cesarschool.poo.titulos.entidades.TituloDivida;
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioAcao;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioGeral;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
-import br.gov.cesarschool.poo.titulos.entidades.Acao;
-import br.gov.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.gov.cesarschool.poo.titulos.entidades.TituloDivida;
-import br.gov.cesarschool.poo.titulos.entidades.Transacao;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioAcao;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioEntidadeOperadora;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioGeral;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioTituloDivida;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
 
 public class TesteRepositorioGeral extends TesteGeral {
 	@Test

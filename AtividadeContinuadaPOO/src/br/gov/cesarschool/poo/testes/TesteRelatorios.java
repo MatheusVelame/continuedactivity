@@ -6,17 +6,17 @@ import java.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import br.com.cesarschool.poo.titulos.entidades.Acao;
+import br.com.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+import br.com.cesarschool.poo.titulos.entidades.Transacao;
+import br.com.cesarschool.poo.titulos.relatorios.RelatorioTransacaoBroker;
+import br.com.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
+import br.com.cesarschool.poo.titulos.utils.Comparador;
+import br.com.cesarschool.poo.titulos.utils.ComparadorPadrao;
+import br.com.cesarschool.poo.titulos.utils.ComparadorTransacaoPorNomeCredora;
+import br.com.cesarschool.poo.titulos.utils.Comparavel;
+import br.com.cesarschool.poo.titulos.utils.Ordenador;
 import br.gov.cesarschool.poo.daogenerico.Entidade;
-import br.gov.cesarschool.poo.titulos.entidades.Acao;
-import br.gov.cesarschool.poo.titulos.entidades.EntidadeOperadora;
-import br.gov.cesarschool.poo.titulos.entidades.Transacao;
-import br.gov.cesarschool.poo.titulos.relatorios.RelatorioTransacaoBroker;
-import br.gov.cesarschool.poo.titulos.repositorios.RepositorioTransacao;
-import br.gov.cesarschool.poo.titulos.utils.Comparador;
-import br.gov.cesarschool.poo.titulos.utils.ComparadorPadrao;
-import br.gov.cesarschool.poo.titulos.utils.ComparadorTransacaoPorNomeCredora;
-import br.gov.cesarschool.poo.titulos.utils.Comparavel;
-import br.gov.cesarschool.poo.titulos.utils.Ordenador;
 
 public class TesteRelatorios extends TesteGeral {
 	private static final String NOME_DIR_TRANSACAO = PONTO + SEP_ARQUIVO + Transacao.class.getSimpleName();

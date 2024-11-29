@@ -1,7 +1,8 @@
-package br.gov.cesarschool.poo.titulos.repositorios;
+package br.com.cesarschool.poo.titulos.repositorios;
 
+import br.com.cesarschool.poo.titulos.entidades.Acao;
 import br.gov.cesarschool.poo.daogenerico.DAOSerializadorObjetos;
-import br.gov.cesarschool.poo.titulos.entidades.EntidadeOperadora;
+
 
 /*
  * Deve gravar em e ler de um arquivo texto chamado Acao.txt os dados dos objetos do tipo
@@ -27,21 +28,21 @@ import br.gov.cesarschool.poo.titulos.entidades.EntidadeOperadora;
  * objeto. Caso o identificador n�o seja encontrado no arquivo, retornar null.   
  */
 
-public class RepositorioEntidadeOperadora extends RepositorioGeral {
+public class RepositorioAcao extends RepositorioGeral {
 
-	public RepositorioEntidadeOperadora() {
+	public RepositorioAcao() {
 	}
 
-    public boolean incluir(EntidadeOperadora entidadeOperadora) {
+    public boolean incluir(Acao acao) {
     	DAOSerializadorObjetos dao = getDao();
 
-        return dao.incluir(entidadeOperadora);
+        return dao.incluir(acao);
     }
 
-    public boolean alterar(EntidadeOperadora entidadeOperadora) {
+    public boolean alterar(Acao acao) {
     	DAOSerializadorObjetos dao = getDao();
 
-        return dao.alterar(entidadeOperadora);
+        return dao.alterar(acao);
     }
 
     public boolean excluir(int identificador) {
@@ -50,15 +51,15 @@ public class RepositorioEntidadeOperadora extends RepositorioGeral {
         return dao.excluir(String.valueOf(identificador));
     }
 
-    public EntidadeOperadora buscar(long identificador) {
+    public Acao buscar(int identificador) {
     	DAOSerializadorObjetos dao = getDao();
 
-        return (EntidadeOperadora)dao.buscar(String.valueOf(identificador));
+        return (Acao)dao.buscar(String.valueOf(identificador));
     }
     
 	@Override
 	public Class<?> getClasseEntidade() {
-		return EntidadeOperadora.class;
+		return Acao.class;
 	}
 	
 }
